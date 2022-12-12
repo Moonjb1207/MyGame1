@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class Enemy : CharacterMovement, IBattle
 {
-    enum State
+    enum STATE
     {
         Create, Normal, Battle, Dead, RunAway
     }
 
-    State myState = State.Create;
+    STATE myState = STATE.Create;
     CharacterStat myStat;
     AIPerception mySensor;
     float curDelay = 0.0f;
 
-    void ChangeState(State ms)
+    void ChangeState(STATE ms)
     {
         if (myState == ms) return;
         myState = ms;
         switch (myState)
         {
-            case State.Create:
+            case STATE.Create:
                 break;
-            case State.Normal:
+            case STATE.Normal:
                 break;
-            case State.Battle:
+            case STATE.Battle:
                 FollowTarget(mySensor.myTarget.transform, myStat.MoveSpeed, myStat.RotSpeed, myStat.AttackDelay, Attacking);
                 break;
-            case State.Dead:
+            case STATE.Dead:
                 break;
-            case State.RunAway:
+            case STATE.RunAway:
                 break;
         }
     }
@@ -38,17 +38,17 @@ public class Enemy : CharacterMovement, IBattle
     {
         switch (myState)
         {
-            case State.Create:
+            case STATE.Create:
                 break;
-            case State.Normal:
+            case STATE.Normal:
                 if (mySensor.myTarget != null)
-                    ChangeState(State.Battle);
+                    ChangeState(STATE.Battle);
                 break;
-            case State.Battle:
+            case STATE.Battle:
                 if (mySensor.myTarget != null && !mySensor.myTargetB.IsLive)
                 {
                     mySensor.LostTarget();
-                    ChangeState(State.Normal);
+                    ChangeState(STATE.Normal);
                 }
 
                 if (!myAnim.GetBool("IsAttacking"))
@@ -56,9 +56,9 @@ public class Enemy : CharacterMovement, IBattle
                     curDelay += Time.deltaTime;
                 }
                 break;
-            case State.Dead:
+            case STATE.Dead:
                 break;
-            case State.RunAway:
+            case STATE.RunAway:
                 break;
         }
     }
@@ -81,7 +81,7 @@ public class Enemy : CharacterMovement, IBattle
 
         if (myStat.CurHP <= 0.0f)
         {
-            ChangeState(State.Dead);
+            ChangeState(STATE.Dead);
         }
         else
         {
@@ -109,7 +109,7 @@ public class Enemy : CharacterMovement, IBattle
         myStat.RotSpeed = 700.0f;
         myStat.AttackDelay = 5.0f;
 
-        ChangeState(State.Normal);
+        ChangeState(STATE.Normal);
     }
 
     // Update is called once per frame
