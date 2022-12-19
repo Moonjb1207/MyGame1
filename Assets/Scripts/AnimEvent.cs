@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class AnimEvent : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public UnityEvent lAttack = null;
+    public UnityEvent hAttack = null;
+    public UnityEvent ComboCheckStart = null;
+    public UnityEvent ComboCheckEnd = null;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+
 }
