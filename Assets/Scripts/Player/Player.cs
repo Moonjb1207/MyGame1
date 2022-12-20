@@ -12,6 +12,7 @@ public class Player : CharacterMovement, IBattle
     STATE myState = STATE.Create;
     CharacterStat myStat;
     Dictionary<int, int> comboAttackList = new Dictionary<int, int>();
+    bool IsRunning = false;
 
     public void OnDamage(float dmg)
     {
@@ -85,15 +86,24 @@ public class Player : CharacterMovement, IBattle
         
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            myAnim.SetFloat("x", Input.GetAxis("Horizontal"));
-            myAnim.SetFloat("y", Input.GetAxis("Vertical"));
+            IsRunning = true;
         }
-        else
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            IsRunning = false;
+        }
+
+        if (!IsRunning)
         {
             myAnim.SetFloat("x", Input.GetAxis("Horizontal") * 0.5f);
             myAnim.SetFloat("y", Input.GetAxis("Vertical") * 0.5f);
         }
-
+        else
+        {
+            myAnim.SetFloat("x", Input.GetAxis("Horizontal") * 0.5f);
+            myAnim.SetFloat("y", Input.GetAxis("Vertical"));
+        }
 
         if (!myAnim.GetBool("IsAttacking") && Input.GetMouseButtonDown(0))
         {
