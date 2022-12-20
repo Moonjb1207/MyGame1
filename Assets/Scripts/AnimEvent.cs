@@ -11,6 +11,14 @@ public class AnimEvent : MonoBehaviour
     public UnityEvent ComboCheckStart = null;
     public UnityEvent ComboCheckEnd = null;
 
+    public void OnComboCheckStart()
+    {
+        ComboCheckStart?.Invoke();
+    }
 
+    public void OnComboCheckEnd()
+    {
+        ComboCheckEnd?.Invoke();
+    }
 
 }

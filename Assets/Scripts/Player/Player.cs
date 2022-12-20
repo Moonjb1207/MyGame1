@@ -11,8 +11,21 @@ public class Player : CharacterMovement, IBattle
 
     STATE myState = STATE.Create;
     CharacterStat myStat;
-    Dictionary<int, int> comboAttackList = new Dictionary<int, int>();
+    int[,] combolAttackList = { { 0, 0, 1 }, { 0, 1, 0 } };
+    int[,] combohAttackList = new int[2, 3];
+    int[] playCombo = new int[2];
+    int pressedButton = -1;
     bool IsRunning = false;
+    bool IsComboable = false;
+    string comboName = "";
+    bool IsRightCombo = false;
+
+    /*
+
+    0 - 0 0 1
+    1 - 1 0 1
+
+    */
 
     public void OnDamage(float dmg)
     {
@@ -71,6 +84,8 @@ public class Player : CharacterMovement, IBattle
     // Start is called before the first frame update
     void Start()
     {
+
+
         myStat.MaxHP = myStat.CurHP = 100.0f;
         myStat.MoveSpeed = 5.0f;
         myStat.RotSpeed = 700.0f;
@@ -105,24 +120,113 @@ public class Player : CharacterMovement, IBattle
             myAnim.SetFloat("y", Input.GetAxis("Vertical"));
         }
 
-        if (!myAnim.GetBool("IsAttacking") && Input.GetMouseButtonDown(0))
+        if (!myAnim.GetBool("IsAttacking"))
         {
-            lAttack();
+            if(Input.GetMouseButtonDown(0))
+            {
+                lAttack();
+                
+                for (int i = 0; i < 2; i++)
+                {
+                    playCombo[i] = i;
+                }
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    pressedButton = 0;
+                }
+                else if (Input.GetMouseButtonDown(1))
+                {
+                    pressedButton = 1;
+                }
+
+                if (IsComboable)
+                {
+                    IsRightCombo = false;
+
+                    int n = myAnim.GetInteger("ComboIndex");
+
+                    if (++n > 3)
+                    {
+                        n = 0;
+
+                        for (int i = 0; i < 2; i++)
+                        {
+                            playCombo[i] = i;
+                        }
+                    }
+
+                    for (int i = 0; i < 2; i++)
+                    {
+                        if (playCombo[i] != -1)
+                        {
+                            if (combolAttackList[i, n] != pressedButton)
+                            {
+                                playCombo[i] = -1;
+                            }
+                            else if (combolAttackList[i, n] == pressedButton)
+                            {
+                                comboName = "lAttack" + i;
+                                IsRightCombo = true;
+                            }
+                        }
+                    }
+
+                    if (!IsRightCombo)
+                    {
+                        comboName = "";
+                        myAnim.SetInteger("ComboIndex", 0);
+                    }
+
+                    myAnim.SetInteger("ComboIndex", n);
+                    myAnim.SetTrigger(comboName);
+
+                }
+            }
         }
         
-        if (!myAnim.GetBool("IsAttacking") && Input.GetMouseButtonDown(1))
+        if (!myAnim.GetBool("IsAttacking"))
         {
-            hAttack();
+            if (Input.GetMouseButtonDown(1))
+            {
+                hAttack();
+            }
+        }
+        else
+        {
+
         }
     }
 
     void lAttack()
     {
+        myAnim.SetInteger("ComboIndex", 0);
         myAnim.SetTrigger("lAttack");
     }
 
     void hAttack()
     {
+        myAnim.SetInteger("ComboIndex", 0);
         myAnim.SetTrigger("hAttack");
+    }
+
+    public void OnlAttack()
+    {
+
+    }
+
+    public void OnhAttack()
+    {
+
+    }
+
+    public void OnComboCheck(bool v)
+    {
+        IsComboable = v;
     }
 }
