@@ -8,8 +8,41 @@ public class AnimEvent : MonoBehaviour
 {
     public UnityEvent lAttack = null;
     public UnityEvent hAttack = null;
+    public UnityEvent jAttack = null;
+    public UnityEvent Attack3 = null;
+    public UnityEvent moveAttack = null;
+    public UnityEvent specialAttack = null;
     public UnityEvent ComboCheckStart = null;
     public UnityEvent ComboCheckEnd = null;
+
+    public void OnlAttack()
+    {
+        lAttack?.Invoke();
+    }
+
+    public void OnhAttack()
+    {
+        hAttack?.Invoke();
+    }
+
+    public void OnjAttack()
+    {
+        jAttack?.Invoke();
+    }
+
+    public void OnAttack3()
+    {
+        Attack3?.Invoke();
+    }
+
+    public void OnmoveAttack()
+    {
+        moveAttack?.Invoke();
+    }
+    public void OnspecialAttack()
+    {
+        specialAttack?.Invoke();
+    }
 
     public void OnComboCheckStart()
     {

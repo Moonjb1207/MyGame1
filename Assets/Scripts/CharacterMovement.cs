@@ -68,11 +68,10 @@ public class CharacterMovement : CharacterProperty
 
                 transform.Translate(dir.normalized * delta, Space.World);
             }
-            else
+            else if (dir.magnitude <= AttackRange)
             {
                 myAnim.SetBool("IsMoving", false);
                 reached?.Invoke();
-
             }
 
             yield return null;

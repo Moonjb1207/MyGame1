@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Enemy : CharacterMovement, IBattle
 {
-    enum STATE
+    public enum STATE
     {
         Create, Normal, Battle, Dead, RunAway
     }
 
-    STATE myState = STATE.Create;
-    CharacterStat myStat;
-    AIPerception mySensor;
-    float curDelay = 0.0f;
+    public STATE myState = STATE.Create;
+    public CharacterStat myStat;
+    public AIPerception mySensor = null;
+    public float curDelay = 0.0f;
+    public Transform myHitPos = null;
+    public float attackRange = 2.0f;
+    float spearSize = 0.5f;
 
     void ChangeState(STATE ms)
     {
@@ -25,9 +28,15 @@ public class Enemy : CharacterMovement, IBattle
             case STATE.Normal:
                 break;
             case STATE.Battle:
-                FollowTarget(mySensor.myTarget.transform, myStat.MoveSpeed, myStat.RotSpeed, myStat.AttackDelay, Attacking);
+                curDelay = myStat.AttackDelay;
+                if (mySensor.myTarget != null)
+                    FollowTarget(mySensor.myTarget.transform, myStat.MoveSpeed, myStat.RotSpeed, attackRange, Attacking);
                 break;
             case STATE.Dead:
+                StopAllCoroutines();
+                myAnim.SetTrigger("Dead");
+                mySensor.enabled = false;
+                //GetComponent<Collider>().enabled = false;
                 break;
             case STATE.RunAway:
                 break;
@@ -63,7 +72,7 @@ public class Enemy : CharacterMovement, IBattle
         }
     }
 
-    void Attacking()
+    public void Attacking()
     {
         if (!myAnim.GetBool("IsAttacking") && mySensor.myTargetB.IsLive)
         {
@@ -75,17 +84,31 @@ public class Enemy : CharacterMovement, IBattle
         }
     }
 
+    public void OnAttack()
+    {
+        Collider[] list = Physics.OverlapSphere(myHitPos.position, spearSize, mySensor.myEnemy);
+
+        foreach (Collider col in list)
+        {
+            IBattle ib = col.GetComponent<IBattle>();
+            ib?.OnDamage(30.0f);
+        }
+    }
+
     public void OnDamage(float dmg)
     {
-        myStat.CurHP -= dmg;
-
-        if (myStat.CurHP <= 0.0f)
+        if (!myStat.IsdmgDelay)
         {
-            ChangeState(STATE.Dead);
-        }
-        else
-        {
+            myStat.CurHP -= dmg;
 
+            if (myStat.CurHP <= 0.0f)
+            {
+                ChangeState(STATE.Dead);
+            }
+            else
+            {
+                myAnim.SetTrigger("OnDamaged");
+            }
         }
     }
 
@@ -101,20 +124,33 @@ public class Enemy : CharacterMovement, IBattle
         }
     }
 
+    void Awake()
+    {
+        ChangeState(STATE.Normal);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         myStat.MaxHP = myStat.CurHP = 100.0f;
-        myStat.MoveSpeed = 5.0f;
+        myStat.MoveSpeed = 3.0f;
         myStat.RotSpeed = 700.0f;
-        myStat.AttackDelay = 5.0f;
-
-        ChangeState(STATE.Normal);
+        myStat.AttackDelay = 3.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
         StateProcess();
+
+        if (myStat.IsdmgDelay)
+        {
+            myStat.DamagedDelay -= Time.deltaTime;
+
+            if (myStat.DamagedDelay <= 0.0f)
+            {
+                myStat.IsdmgDelay = false;
+            }
+        }
     }
 }

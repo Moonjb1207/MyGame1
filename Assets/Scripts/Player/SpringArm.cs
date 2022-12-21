@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpringArm : MonoBehaviour
 {
-    Vector2 RotRange = new Vector2(-40, 80);
-    float rotSpeed = 40.0f;
+    Vector2 RotRange = new Vector2(-30, 20);
+    float rotSpeed = 5.0f;
     Vector2 curRot = Vector2.zero;
     public Transform myCam = null;
     Vector2 ZoomRange = new Vector2(1.5f, 10.0f);
@@ -16,6 +16,9 @@ public class SpringArm : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+
         curRot.x = transform.localRotation.eulerAngles.x;
         curCamDist = -myCam.localPosition.z;
     }
