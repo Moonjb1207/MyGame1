@@ -10,7 +10,7 @@ public class Enemy : CharacterMovement, IBattle
     }
 
     public STATE myState = STATE.Create;
-    public CharacterStat myStat;
+    public EnemyStat myStat;
     public AIPerception mySensor = null;
     public float curDelay = 0.0f;
     public Transform myHitPos = null;
@@ -95,6 +95,21 @@ public class Enemy : CharacterMovement, IBattle
         }
     }
 
+    public void timetoRun()
+    {
+        ChangeState(STATE.RunAway);
+    }
+
+    void Running()
+    {
+
+    }
+
+    void Appear()
+    {
+
+    }
+
     public void OnDamage(float dmg)
     {
         if (!myStat.IsdmgDelay)
@@ -132,10 +147,7 @@ public class Enemy : CharacterMovement, IBattle
     // Start is called before the first frame update
     void Start()
     {
-        myStat.MaxHP = myStat.CurHP = 100.0f;
-        myStat.MoveSpeed = 3.0f;
-        myStat.RotSpeed = 700.0f;
-        myStat.AttackDelay = 3.0f;
+
     }
 
     // Update is called once per frame

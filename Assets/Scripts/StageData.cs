@@ -47,19 +47,24 @@ public class StageData : ScriptableObject
     {
         get => stageTime;
     }
-    
+
     public float BossTime
     {
         get => bossTime;
     }
 
-    public float EnemyCount
+    public int EnemyCount
     {
         get => enemyCount;
     }
 
-    public float StageLevel
+    public int StageLevel
     {
         get => stageLevel;
+    }
+
+    public StageEnemy Enemy
+    {
+        get => enemy;
     }
 }
