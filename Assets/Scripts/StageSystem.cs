@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageSystem : MonoBehaviour
 {
@@ -13,16 +14,19 @@ public class StageSystem : MonoBehaviour
 
     public Transform[] spawnPos;
     public StageData[] stageList;
+    public Slider restTimeSlider = null;
 
     public List<Enemy> spawnEnemies = new List<Enemy>();
     
     StageState myState = StageState.Menu;
     public int stage;
     float stageTime;
-    int clearEnemy;
+    public int clearEnemy;
+    public int spawnEnemy;
     float startTime = 5.0f;
     float clearTime = 5.0f;
     float restTime;
+
 
     void ChangeState(StageState s)
     {
@@ -32,17 +36,23 @@ public class StageSystem : MonoBehaviour
         {
             case StageState.Start:
                 restTime = startTime;
+                restTimeSlider.value = restTime / startTime;
                 break;
             case StageState.Enemy:
                 StartCoroutine(Spawning());
                 stageTime = stageList[stage].StageTime;
+                restTimeSlider.value = stageTime / stageList[stage].StageTime;
                 clearEnemy = 0;
                 break;
             case StageState.Boss:
+                BossSpawn();
                 stageTime = stageList[stage].BossTime;
+                restTimeSlider.value = stageTime / stageList[stage].BossTime;
+                clearEnemy = 0;
                 break;
             case StageState.Clear:
                 restTime = clearTime;
+                restTimeSlider.value = restTime / clearTime;
                 stage++;
                 break;
             case StageState.GameOver:
@@ -56,6 +66,7 @@ public class StageSystem : MonoBehaviour
         {
             case StageState.Start:
                 restTime -= Time.deltaTime;
+                restTimeSlider.value = restTime / startTime;
                 if (restTime <= 0.0f)
                 {
                     ChangeState(StageState.Enemy);
@@ -63,7 +74,7 @@ public class StageSystem : MonoBehaviour
                 break;
             case StageState.Enemy:
                 stageTime -= Time.deltaTime;
-
+                restTimeSlider.value = stageTime / stageList[stage].StageTime;
                 if (stageTime <= 0.0f || clearEnemy == stageList[stage].EnemyCount)
                 {
                     Running();
@@ -72,7 +83,7 @@ public class StageSystem : MonoBehaviour
                 break;
             case StageState.Boss:
                 stageTime -= Time.deltaTime;
-
+                restTimeSlider.value = stageTime / stageList[stage].BossTime;
                 if (stageTime <= 0.0f)
                 {
                     if (clearEnemy == 1)
@@ -87,7 +98,7 @@ public class StageSystem : MonoBehaviour
                 break;
             case StageState.Clear:
                 restTime -= Time.deltaTime;
-
+                restTimeSlider.value = restTime / clearTime;
                 if (restTime <= 0.0f)
                 {
                     ChangeState(StageState.Start);
@@ -119,10 +130,30 @@ public class StageSystem : MonoBehaviour
     {
         while(spawnEnemies.Count != stageList[stage].EnemyCount && stageTime >= 0.0f)
         {
-            
+            //true면 다음 구문 실행
+            yield return new WaitUntil(IsFull);
+            yield return new WaitForSeconds(stageList[stage].SpawnTime);
 
-            yield return null;
+            spawnEnemy++;
+
+            GameObject obj = Instantiate(Resources.Load("Prefabs/Stage/Enemy") as GameObject, spawnPos[Random.Range(0,4)].position, spawnPos[Random.Range(0, 4)].rotation);
+
+            Enemy scp = obj.GetComponent<Enemy>();
+            spawnEnemies.Add(scp);
         }
+    }
+
+    void BossSpawn()
+    {
+        string a = stageList[stage].Boss.bossName;
+        Instantiate(Resources.Load("Prefabs/Boss/" + a) as GameObject, spawnPos[1].position, spawnPos[1].rotation);
+    }
+
+    bool IsFull()
+    {
+        if (spawnEnemy == stageList[stage].SpawnCount)
+            return false;
+        return true;
     }
 
     void Running()

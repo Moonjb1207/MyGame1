@@ -24,12 +24,14 @@ public struct StageBoss
     public float maxHP;
     public float moveSpeed;
     public float attackDelay;
+    public string bossName;
 
-    public StageBoss(float mh, float ms, float ad)
+    public StageBoss(float mh, float ms, float ad, string bn)
     {
         maxHP = mh;
         moveSpeed = ms;
         attackDelay = ad;
+        bossName = bn;
     }
 }
 
@@ -42,6 +44,13 @@ public class StageData : ScriptableObject
     [SerializeField] float bossTime;
     [SerializeField] int enemyCount;
     [SerializeField] int stageLevel;
+    [SerializeField] int spawnCount;
+    [SerializeField] float spawnTime;
+
+    public float SpawnTime
+    {
+        get => spawnTime;
+    }
 
     public float StageTime
     {
@@ -66,5 +75,15 @@ public class StageData : ScriptableObject
     public StageEnemy Enemy
     {
         get => enemy;
+    }
+
+    public StageBoss Boss
+    {
+        get => boss;
+    }
+
+    public int SpawnCount
+    {
+        get => spawnCount;
     }
 }

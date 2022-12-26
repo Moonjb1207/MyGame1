@@ -33,12 +33,15 @@ public class Enemy : CharacterMovement, IBattle
                     FollowTarget(mySensor.myTarget.transform, myStat.MoveSpeed, myStat.RotSpeed, attackRange, Attacking);
                 break;
             case STATE.Dead:
+                StageSystem.Inst.spawnEnemy--;
+                StageSystem.Inst.clearEnemy++;
                 StopAllCoroutines();
                 myAnim.SetTrigger("Dead");
                 mySensor.enabled = false;
                 //GetComponent<Collider>().enabled = false;
                 break;
             case STATE.RunAway:
+                Running();
                 break;
         }
     }
