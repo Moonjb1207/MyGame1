@@ -27,7 +27,6 @@ public class Player : CharacterMovement, IBattle
     public LayerMask myGround = default;
     public LayerMask myEnemy = default;
     public Transform myHitPos = null;
-    public Slider myHPSlider = null;
 
     /*
 
@@ -39,7 +38,7 @@ public class Player : CharacterMovement, IBattle
     public void OnDamage(float dmg)
     {
         myStat.CurHP -= dmg;
-        myHPSlider.value = myStat.CurHP / myStat.MaxHP;
+        StageUI.Inst.Player.value = myStat.CurHP / myStat.MaxHP;
 
         if (myStat.CurHP <= 0.0f)
         {
@@ -72,7 +71,7 @@ public class Player : CharacterMovement, IBattle
             case STATE.Create:
                 break;
             case STATE.Normal:
-                myHPSlider.value = myStat.CurHP / myStat.MaxHP;
+                StageUI.Inst.Player.value = myStat.CurHP / myStat.MaxHP;
                 break;
             case STATE.Dead:
                 myAnim.SetTrigger("Dead");

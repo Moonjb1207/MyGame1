@@ -14,7 +14,7 @@ public class StageSystem : MonoBehaviour
 
     public Transform[] spawnPos;
     public StageData[] stageList;
-    public Slider restTimeSlider = null;
+    public string[] explains;
 
     public List<Enemy> spawnEnemies = new List<Enemy>();
     
@@ -36,26 +36,32 @@ public class StageSystem : MonoBehaviour
         {
             case StageState.Start:
                 restTime = startTime;
-                restTimeSlider.value = restTime / startTime;
+                StageUI.Inst.Time.value = restTime / startTime;
+                StageUI.Inst.Stage.text = "Stage " + stage;
+                StageUI.Inst.Explain.text = explains[0];
                 break;
             case StageState.Enemy:
                 StartCoroutine(Spawning());
                 stageTime = stageList[stage].StageTime;
-                restTimeSlider.value = stageTime / stageList[stage].StageTime;
+                StageUI.Inst.Time.value = stageTime / stageList[stage].StageTime;
+                StageUI.Inst.Explain.text = explains[1];
                 clearEnemy = 0;
                 break;
             case StageState.Boss:
                 BossSpawn();
                 stageTime = stageList[stage].BossTime;
-                restTimeSlider.value = stageTime / stageList[stage].BossTime;
+                StageUI.Inst.Time.value = stageTime / stageList[stage].BossTime;
+                StageUI.Inst.Explain.text = explains[2];
                 clearEnemy = 0;
                 break;
             case StageState.Clear:
                 restTime = clearTime;
-                restTimeSlider.value = restTime / clearTime;
+                StageUI.Inst.Time.value = restTime / clearTime;
+                StageUI.Inst.Explain.text = explains[3];
                 stage++;
                 break;
             case StageState.GameOver:
+                StageUI.Inst.Explain.text = explains[4];
                 break;
         }
     }
@@ -66,7 +72,7 @@ public class StageSystem : MonoBehaviour
         {
             case StageState.Start:
                 restTime -= Time.deltaTime;
-                restTimeSlider.value = restTime / startTime;
+                StageUI.Inst.Time.value = restTime / startTime;
                 if (restTime <= 0.0f)
                 {
                     ChangeState(StageState.Enemy);
@@ -74,7 +80,7 @@ public class StageSystem : MonoBehaviour
                 break;
             case StageState.Enemy:
                 stageTime -= Time.deltaTime;
-                restTimeSlider.value = stageTime / stageList[stage].StageTime;
+                StageUI.Inst.Time.value = stageTime / stageList[stage].StageTime;
                 if (stageTime <= 0.0f || clearEnemy == stageList[stage].EnemyCount)
                 {
                     Running();
@@ -83,7 +89,7 @@ public class StageSystem : MonoBehaviour
                 break;
             case StageState.Boss:
                 stageTime -= Time.deltaTime;
-                restTimeSlider.value = stageTime / stageList[stage].BossTime;
+                StageUI.Inst.Time.value = stageTime / stageList[stage].BossTime;
                 if (stageTime <= 0.0f)
                 {
                     if (clearEnemy == 1)
@@ -98,7 +104,7 @@ public class StageSystem : MonoBehaviour
                 break;
             case StageState.Clear:
                 restTime -= Time.deltaTime;
-                restTimeSlider.value = restTime / clearTime;
+                StageUI.Inst.Time.value = restTime / clearTime;
                 if (restTime <= 0.0f)
                 {
                     ChangeState(StageState.Start);
@@ -162,5 +168,25 @@ public class StageSystem : MonoBehaviour
         {
             spawnEnemies[i].timetoRun();
         }
+    }
+
+    void UpdateScore()
+    {
+
+    }
+
+    void UpdateHP()
+    {
+
+    }
+
+    void UpdateText()
+    {
+
+    }
+
+    void UpdateImage()
+    {
+
     }
 }
