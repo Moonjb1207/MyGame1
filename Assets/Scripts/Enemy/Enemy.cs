@@ -15,7 +15,10 @@ public class Enemy : CharacterMovement, IBattle
     public float curDelay = 0.0f;
     public Transform myHitPos = null;
     public float attackRange = 2.0f;
+    public LayerMask myGround = default;
+    
     float spearSize = 0.5f;
+    
 
     void ChangeState(STATE ms)
     {
@@ -26,6 +29,7 @@ public class Enemy : CharacterMovement, IBattle
             case STATE.Create:
                 break;
             case STATE.Normal:
+                Appear();
                 break;
             case STATE.Battle:
                 curDelay = myStat.AttackDelay;
@@ -53,7 +57,13 @@ public class Enemy : CharacterMovement, IBattle
             case STATE.Create:
                 break;
             case STATE.Normal:
-                if (mySensor.myTarget != null)
+                if (Physics.Raycast(transform.position, Vector3.down, 0.1f, myGround) && myAnim.GetBool("IsAir"))
+                {
+                    myAnim.SetBool("IsAir", false);
+                    myAnim.SetTrigger("Landing");
+                }
+
+                if (mySensor.myTarget != null && myAnim.GetBool("endAppear"))
                     ChangeState(STATE.Battle);
                 break;
             case STATE.Battle:
@@ -71,6 +81,10 @@ public class Enemy : CharacterMovement, IBattle
             case STATE.Dead:
                 break;
             case STATE.RunAway:
+                if (!myAnim.GetBool("IsJumping"))
+                {
+                    Destroy(gameObject);
+                }
                 break;
         }
     }
@@ -98,6 +112,16 @@ public class Enemy : CharacterMovement, IBattle
         }
     }
 
+    public void Dying()
+    {
+
+    }
+
+    void Dead()
+    {
+
+    }
+
     public void timetoRun()
     {
         ChangeState(STATE.RunAway);
@@ -105,12 +129,17 @@ public class Enemy : CharacterMovement, IBattle
 
     void Running()
     {
+        myAnim.SetTrigger("Jump");
+        myRigid.AddForce(Vector3.back * 2.0f, ForceMode.Impulse);
+        myRigid.AddForce(Vector3.up * 5.0f, ForceMode.Impulse);
+        myAnim.SetBool("IsJumping", true);
 
     }
 
     void Appear()
     {
-
+        myAnim.SetBool("IsAir", true);
+        myRigid.AddForce(Vector3.forward * 3.0f, ForceMode.Impulse);
     }
 
     public void OnDamage(float dmg)

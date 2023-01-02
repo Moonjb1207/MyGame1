@@ -61,10 +61,15 @@ public class StageUI : MonoBehaviour
         get => bossImg;
     }
 
+    private void Awake()
+    {
+        Inst = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        Inst = this;
+
     }
 
     // Update is called once per frame

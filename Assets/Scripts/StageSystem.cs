@@ -37,7 +37,7 @@ public class StageSystem : MonoBehaviour
             case StageState.Start:
                 restTime = startTime;
                 StageUI.Inst.Time.value = restTime / startTime;
-                StageUI.Inst.Stage.text = "Stage " + stage;
+                StageUI.Inst.Stage.text = "Stage " + stage + 1;
                 StageUI.Inst.Explain.text = explains[0];
                 break;
             case StageState.Enemy:
@@ -118,6 +118,10 @@ public class StageSystem : MonoBehaviour
     private void Awake()
     {
         Inst = this;
+
+        //for test
+        //stage = LoadManager.Inst.selectStage;
+        stage = 0;
     }
 
     // Start is called before the first frame update
