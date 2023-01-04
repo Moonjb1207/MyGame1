@@ -16,11 +16,14 @@ public class Enemy : CharacterMovement, IBattle
     public Transform myHitPos = null;
     public float attackRange = 2.0f;
     public LayerMask myGround = default;
+
+    [SerializeField] GameObject[] OnDamagedEf = new GameObject[2];
+    [SerializeField] Transform SpinePos;
     
     float spearSize = 0.5f;
     
 
-    void ChangeState(STATE ms)
+    protected void ChangeState(STATE ms)
     {
         if (myState == ms) return;
         myState = ms;
@@ -39,10 +42,13 @@ public class Enemy : CharacterMovement, IBattle
             case STATE.Dead:
                 StageSystem.Inst.spawnEnemy--;
                 StageSystem.Inst.clearEnemy++;
+
                 StopAllCoroutines();
+                
                 myAnim.SetTrigger("Dead");
                 mySensor.enabled = false;
-                //GetComponent<Collider>().enabled = false;
+                myRigid.useGravity = false;
+                myCollider.enabled = false;
                 break;
             case STATE.RunAway:
                 Running();
@@ -50,7 +56,7 @@ public class Enemy : CharacterMovement, IBattle
         }
     }
 
-    void StateProcess()
+    protected void StateProcess()
     {
         switch (myState)
         {
@@ -108,18 +114,29 @@ public class Enemy : CharacterMovement, IBattle
         foreach (Collider col in list)
         {
             IBattle ib = col.GetComponent<IBattle>();
-            ib?.OnDamage(30.0f);
+            ib?.OnDamage(30.0f, 1);
         }
     }
 
     public void Dying()
     {
-
+        StartCoroutine(Dead());
     }
 
-    void Dead()
+    IEnumerator Dead()
     {
+        yield return new WaitForSeconds(0.5f);
 
+        while (transform.position.y > 0.0f)
+        {
+            float delta = 0.5f * Time.deltaTime;
+
+            transform.Translate(Vector3.down * delta);
+
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 
     public void timetoRun()
@@ -142,11 +159,12 @@ public class Enemy : CharacterMovement, IBattle
         myRigid.AddForce(Vector3.forward * 3.0f, ForceMode.Impulse);
     }
 
-    public void OnDamage(float dmg)
+    public void OnDamage(float dmg, int i)
     {
         if (!myStat.IsdmgDelay)
         {
             myStat.CurHP -= dmg;
+            playEffect(i);
 
             if (myStat.CurHP <= 0.0f)
             {
@@ -157,6 +175,12 @@ public class Enemy : CharacterMovement, IBattle
                 myAnim.SetTrigger("OnDamaged");
             }
         }
+    }
+
+    void playEffect(int i)
+    {
+        GameObject obj = Instantiate(OnDamagedEf[i]);
+        obj.transform.position = SpinePos.position;
     }
 
     public bool IsLive
@@ -174,6 +198,7 @@ public class Enemy : CharacterMovement, IBattle
     void Awake()
     {
         ChangeState(STATE.Normal);
+        myStat.IsBoss = false;
     }
 
     // Start is called before the first frame update

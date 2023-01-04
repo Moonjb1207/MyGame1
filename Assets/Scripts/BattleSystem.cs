@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IBattle
 {
-    void OnDamage(float dmg);
+    void OnDamage(float dmg, int i);
     bool IsLive
     {
         get;

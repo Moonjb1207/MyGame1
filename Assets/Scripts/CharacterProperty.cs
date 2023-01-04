@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterProperty : MonoBehaviour
 {
     Renderer _renderer = null;
-    protected Renderer myRender
+    public Renderer myRender
     {
         get
         {
@@ -22,7 +22,7 @@ public class CharacterProperty : MonoBehaviour
     }
 
     Animator _anim = null;
-    protected Animator myAnim
+    public Animator myAnim
     {
         get
         {
@@ -39,7 +39,7 @@ public class CharacterProperty : MonoBehaviour
     }
 
     Rigidbody _rigid = null;
-    protected Rigidbody myRigid
+    public Rigidbody myRigid
     {
         get
         {
@@ -56,7 +56,7 @@ public class CharacterProperty : MonoBehaviour
     }
 
     Collider _collider = null;
-    protected Collider myCollider
+    public Collider myCollider
     {
         get
         {

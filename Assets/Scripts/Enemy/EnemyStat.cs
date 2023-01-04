@@ -14,6 +14,7 @@ public class EnemyStat : MonoBehaviour
     [SerializeField] float attackDelay;
     [SerializeField] float damagedDelay;
     [SerializeField] bool isdmgDelay;
+    public bool IsBoss = false;
 
 
     public float MaxHP
@@ -80,10 +81,20 @@ public class EnemyStat : MonoBehaviour
     }
     void Start()
     {
-        maxHP = myData[StageSystem.Inst.stage].Enemy.maxHP;
-        curHP = myData[StageSystem.Inst.stage].Enemy.maxHP;
-        moveSpeed = myData[StageSystem.Inst.stage].Enemy.moveSpeed;
-        attackDelay = myData[StageSystem.Inst.stage].Enemy.attackDelay;
+        if (!IsBoss)
+        {
+            maxHP = myData[StageSystem.Inst.stage].Enemy.maxHP;
+            curHP = myData[StageSystem.Inst.stage].Enemy.maxHP;
+            moveSpeed = myData[StageSystem.Inst.stage].Enemy.moveSpeed;
+            attackDelay = myData[StageSystem.Inst.stage].Enemy.attackDelay;
+        }
+        else
+        {
+            maxHP = myData[StageSystem.Inst.stage].Boss.maxHP;
+            curHP = myData[StageSystem.Inst.stage].Boss.maxHP;
+            moveSpeed = myData[StageSystem.Inst.stage].Boss.moveSpeed;
+            attackDelay = myData[StageSystem.Inst.stage].Boss.attackDelay;
+        }
         rotSpeed = 700.0f;
         damagedDelay = 0.0f;
         isdmgDelay = false;

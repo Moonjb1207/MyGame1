@@ -146,7 +146,7 @@ public class StageSystem : MonoBehaviour
 
             spawnEnemy++;
 
-            GameObject obj = Instantiate(Resources.Load("Prefabs/Stage/Enemy") as GameObject, spawnPos[Random.Range(0,4)].position, spawnPos[Random.Range(0, 4)].rotation);
+            GameObject obj = Instantiate(Resources.Load("Prefabs/Stage/Enemy") as GameObject, spawnPos[Random.Range(0,3)].position, spawnPos[Random.Range(0, 3)].rotation);
 
             Enemy scp = obj.GetComponent<Enemy>();
             spawnEnemies.Add(scp);
@@ -170,8 +170,14 @@ public class StageSystem : MonoBehaviour
     {
         for(int i = 0; i < spawnEnemies.Count; i++)
         {
-            spawnEnemies[i].timetoRun();
+            if (spawnEnemies[i].IsLive)
+                spawnEnemies[i].timetoRun();
         }
+    }
+    
+    public void PlayerDead()
+    {
+        ChangeState(StageState.GameOver);
     }
 
     void UpdateScore()

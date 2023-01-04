@@ -14,6 +14,12 @@ public class AnimEvent : MonoBehaviour
     public UnityEvent specialAttack = null;
     public UnityEvent ComboCheckStart = null;
     public UnityEvent ComboCheckEnd = null;
+    public UnityEvent Dead = null;
+
+    public void OnDead()
+    {
+        Dead?.Invoke();
+    }
 
     public void OnlAttack()
     {

@@ -28,14 +28,6 @@ public class CharacterMovement : CharacterProperty
         }
     }
 
-    IEnumerator Rotating(Vector3 target, float RotSpeed)
-    {
-        while (target != null)
-        {
-            yield return null;
-        }
-    }
-
     protected void FollowTarget(Transform target, float MoveSpeed, float RotSpeed, float AttackRange, MyAction reached)
     {
         if (coFollow != null) StopCoroutine(coFollow);
@@ -73,6 +65,27 @@ public class CharacterMovement : CharacterProperty
                 myAnim.SetBool("IsMoving", false);
                 reached?.Invoke();
             }
+
+            yield return null;
+        }
+    }
+
+    protected void StarePlayer(Transform target, float rotSpeed)
+    {
+        StartCoroutine(Staring(target, rotSpeed));
+    }
+
+    IEnumerator Staring(Transform target, float rotSpeed)
+    {
+        while (true)
+        {
+            float rdelta = rotSpeed * Time.deltaTime;
+
+            Vector3 dir = target.position - transform.position;
+
+            Vector3 rot = Vector3.RotateTowards(transform.forward, dir, rdelta * Mathf.Deg2Rad, 0.0f);
+
+            transform.rotation = Quaternion.LookRotation(rot);
 
             yield return null;
         }
