@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpringArm : MonoBehaviour
 {
+
     Vector2 RotRange = new Vector2(-30, 20);
     float rotSpeed = 5.0f;
     Vector2 curRot = Vector2.zero;

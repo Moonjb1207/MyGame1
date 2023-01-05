@@ -7,13 +7,13 @@ public class Player : CharacterMovement, IBattle
 {
     protected enum STATE
     {
-        Create, Normal, Dead
+        Create, Normal, Dead, InBattle, Waiting
     }
 
     protected STATE myState = STATE.Create;
     public CharacterStat myStat;
-    public int[,] combolAttackList;
-    public int[,] combohAttackList = new int[2, 3];
+    public List<List<int>> combolAttackList = new List<List<int>>();
+    public List<List<int>> combohAttackList = new List<List<int>>();
 
     /*
     public int[] playCombo = new int[2];
@@ -79,7 +79,7 @@ public class Player : CharacterMovement, IBattle
         }
     }
 
-    void ChangeState(STATE s)
+    virtual protected void ChangeState(STATE s)
     {
         if (myState == s) return;
         myState = s;
@@ -274,5 +274,26 @@ public class Player : CharacterMovement, IBattle
     IEnumerator Dead()
     {
         yield return new WaitForSeconds(3.0f);
+    }
+
+    public void InCharc(Vector3 trgPos)
+    {
+        ChangeState(STATE.InBattle);
+
+
+    }
+
+    public void OutCharc()
+    {
+        ChangeState(STATE.Waiting);
+    }
+
+    protected void Damaging(Collider col, float dmg, int i)
+    {
+        IBattle ib = col.GetComponent<IBattle>();
+        ib?.OnDamage(dmg, i);
+        Enemy enemy = col.GetComponent<Enemy>();
+        enemy.myStat.DamagedDelay = 0.5f;
+        enemy.myStat.IsdmgDelay = true;
     }
 }

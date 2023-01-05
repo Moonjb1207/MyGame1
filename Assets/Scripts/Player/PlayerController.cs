@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     public Player[] players = new Player[3];
     [SerializeField] int curIndex;
+    public SpringArm myCam;
 
     [SerializeField]Animator myAnim;
     Rigidbody myRigid;
@@ -19,14 +20,23 @@ public class PlayerController : MonoBehaviour
     bool IsRightCombo = false;
     string comboName = "";
 
-    int[,] combolAttackList;
-    int[,] combohAttackList;
+    List<List<int>> combolAttackList = new List<List<int>>();
+    List<List<int>> combohAttackList = new List<List<int>>();
     float JumpPower;
     float DownPower;
+
+    Vector3 PlayerPos = Vector3.zero;
 
     private void Awake()
     {
         Inst = this;
+
+        for (int i = 0; i < 3; i++)
+        {
+            players[i].gameObject.SetActive(false);
+        }
+
+        players[curIndex].InCharc();
 
         curIndex = 0;
         myAnim = players[curIndex].myAnim;
@@ -36,6 +46,9 @@ public class PlayerController : MonoBehaviour
         combohAttackList = players[curIndex].combohAttackList;
         JumpPower = players[curIndex].JumpPower;
         DownPower = players[curIndex].DownPower;
+
+        players[curIndex].gameObject.SetActive(true);
+        myCam.transform.SetParent(players[curIndex].transform);
     }
 
     // Start is called before the first frame update
@@ -52,10 +65,18 @@ public class PlayerController : MonoBehaviour
 
     void ChangeCharc()
     {
+        players[curIndex].OutCharc();
+        players[curIndex].gameObject.SetActive(false);
+
+        PlayerPos = players[curIndex].transform.position;
+
         curIndex++;
 
         if (curIndex > 2)
             curIndex = 0;
+
+
+        players[curIndex].InCharc(PlayerPos);
 
         myAnim = players[curIndex].myAnim;
         myRigid = players[curIndex].myRigid;
@@ -64,6 +85,9 @@ public class PlayerController : MonoBehaviour
         combohAttackList = players[curIndex].combohAttackList;
         JumpPower = players[curIndex].JumpPower;
         DownPower = players[curIndex].DownPower;
+
+        players[curIndex].gameObject.SetActive(true);
+        myCam.transform.SetParent(players[curIndex].transform);
     }
     
     void Controller()
@@ -139,11 +163,11 @@ public class PlayerController : MonoBehaviour
                         {
                             if (playCombo[i] != -1)
                             {
-                                if (combolAttackList[i, n] != pressedButton)
+                                if (combolAttackList[i][n] != pressedButton)
                                 {
                                     playCombo[i] = -1;
                                 }
-                                else if (combolAttackList[i, n] == pressedButton)
+                                else if (combolAttackList[i][n] == pressedButton)
                                 {
                                     comboName = "lAttack" + i;
                                     IsRightCombo = true;
