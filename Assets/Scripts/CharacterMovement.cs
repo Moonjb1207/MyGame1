@@ -28,13 +28,13 @@ public class CharacterMovement : CharacterProperty
         }
     }
 
-    protected void FollowTarget(Transform target, float MoveSpeed, float RotSpeed, float AttackRange, MyAction reached)
+    protected void FollowTarget(Transform target, float MoveSpeed, float RotSpeed, float AttackRange, MyAction reached = null)
     {
         if (coFollow != null) StopCoroutine(coFollow);
         coFollow = StartCoroutine(FollowingTarget(target, MoveSpeed, RotSpeed, AttackRange, reached));
     }
 
-    IEnumerator FollowingTarget(Transform target, float MoveSpeed, float RotSpeed, float AttackRange, MyAction reached)
+    IEnumerator FollowingTarget(Transform target, float MoveSpeed, float RotSpeed, float AttackRange, MyAction reached = null)
     {
         while (target != null)
         {

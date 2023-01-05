@@ -37,7 +37,6 @@ public class Player : CharacterMovement, IBattle
     public LayerMask myEnemy = default;
     public Transform myHitPos = null;
 
-
     /*
     { { 0, 0, 1 }, { 0, 1, 0 } }
     0 - 0 0 1
@@ -276,11 +275,9 @@ public class Player : CharacterMovement, IBattle
         yield return new WaitForSeconds(3.0f);
     }
 
-    public void InCharc(Vector3 trgPos)
+    public void InCharc()
     {
         ChangeState(STATE.InBattle);
-
-
     }
 
     public void OutCharc()

@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Inst = null;
 
-    public Player[] players = new Player[3];
+    public Player[] players = new Player[2];
     [SerializeField] int curIndex;
     public SpringArm myCam;
 
@@ -25,16 +25,20 @@ public class PlayerController : MonoBehaviour
     float JumpPower;
     float DownPower;
 
-    Vector3 PlayerPos = Vector3.zero;
+    Vector3 curPos = Vector3.zero;
 
     private void Awake()
     {
         Inst = this;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
             players[i].gameObject.SetActive(false);
         }
+
+        players[curIndex].gameObject.SetActive(true);
+
+        myCam.transform.SetParent(players[curIndex].transform);
 
         players[curIndex].InCharc();
 
@@ -46,9 +50,6 @@ public class PlayerController : MonoBehaviour
         combohAttackList = players[curIndex].combohAttackList;
         JumpPower = players[curIndex].JumpPower;
         DownPower = players[curIndex].DownPower;
-
-        players[curIndex].gameObject.SetActive(true);
-        myCam.transform.SetParent(players[curIndex].transform);
     }
 
     // Start is called before the first frame update
@@ -66,17 +67,17 @@ public class PlayerController : MonoBehaviour
     void ChangeCharc()
     {
         players[curIndex].OutCharc();
-        players[curIndex].gameObject.SetActive(false);
 
-        PlayerPos = players[curIndex].transform.position;
+        myCam.transform.SetParent(this.transform);
+
+        curPos = players[curIndex].transform.position;
+
+        players[curIndex].gameObject.SetActive(false);
 
         curIndex++;
 
-        if (curIndex > 2)
+        if (curIndex > 1)
             curIndex = 0;
-
-
-        players[curIndex].InCharc(PlayerPos);
 
         myAnim = players[curIndex].myAnim;
         myRigid = players[curIndex].myRigid;
@@ -86,8 +87,13 @@ public class PlayerController : MonoBehaviour
         JumpPower = players[curIndex].JumpPower;
         DownPower = players[curIndex].DownPower;
 
+        players[curIndex].transform.position = curPos;
+
         players[curIndex].gameObject.SetActive(true);
+
         myCam.transform.SetParent(players[curIndex].transform);
+
+        players[curIndex].InCharc();
     }
     
     void Controller()
