@@ -98,6 +98,7 @@ public class PlayerController : MonoBehaviour
     
     void Controller()
     {
+        //Moving
         if (!myAnim.GetBool("IsAttacking"))
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -122,8 +123,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //Attack
         if (!myAnim.GetBool("IsAir"))
         {
+            //=========lAttack Combo==========
             if (!myAnim.GetBool("IsAttacking"))
             {
                 if (Input.GetMouseButtonDown(0))
@@ -194,7 +197,9 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
+            //=========lAttack Combo==========
 
+            //=========hAttack Combo==========
             if (!myAnim.GetBool("IsAttacking"))
             {
                 if (Input.GetMouseButtonDown(1))
@@ -206,8 +211,10 @@ public class PlayerController : MonoBehaviour
             {
 
             }
+            //========hAttack Combo===========
         }
 
+        //Jump
         if (!myAnim.GetBool("IsAir") && !myAnim.GetBool("IsAttacking"))
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -217,12 +224,14 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //Check Air
         if (Physics.Raycast(transform.position, Vector3.down, 0.1f, myGround) && myAnim.GetBool("IsAir"))
         {
             myAnim.SetBool("IsAir", false);
             myAnim.SetTrigger("Landing");
         }
 
+        //JumpAttack
         if (myAnim.GetBool("IsJumping") && players[curIndex].IsComboable)
         {
             if (Input.GetMouseButtonDown(0))
@@ -232,12 +241,19 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //Change Char
         if (!myAnim.GetBool("IsJumping") && !myAnim.GetBool("IsAttacking"))
         {
             if (Input.GetKeyDown(KeyCode.X))
             {
                 ChangeCharc();
             }
+        }
+
+        //Pause
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+
         }
     }
 }
