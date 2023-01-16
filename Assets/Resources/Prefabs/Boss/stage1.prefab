@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3060970975539787831}
-  - component: {fileID: 3060970975539787824}
+  - component: {fileID: -3574368972892730884}
   - component: {fileID: 3060970975539787827}
   - component: {fileID: 3060970975539787826}
   - component: {fileID: 3060970975539787825}
@@ -99,7 +99,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!114 &3060970975539787824
+--- !u!114 &-3574368972892730884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,15 +108,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3060970975539787830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e504d128f0b524c47a5486440b1d0cb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6502d411bf5eae5468233f96535b8e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myState: 0
   myStat: {fileID: 3060970975539787827}
-  mySensor: {fileID: 3060970974659634713}
   curDelay: 0
-  myHitPos: {fileID: 3060970975683782873}
-  attackRange: 2
+  mySensor: {fileID: 3060970974659634713}
+  myGround:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &3060970975539787827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   attackDelay: 0
   damagedDelay: 0
   isdmgDelay: 0
+  IsBoss: 0
 --- !u!136 &3060970975539787826
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -539,7 +540,7 @@ MonoBehaviour:
   Attack:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3060970975539787824}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
         m_MethodName: OnAttack
         m_Mode: 1
@@ -551,6 +552,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  Dead:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &5938730092114311938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8651515420689546929, guid: ff63b0a2a76305f418eac6f15d340dad, type: 3}

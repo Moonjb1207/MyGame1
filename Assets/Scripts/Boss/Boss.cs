@@ -79,7 +79,7 @@ public class Boss : CharacterMovement, IBattle
 
                 if (curDelay >= myStat.AttackDelay)
                 {
-                    int rndpat = Random.Range(0, 4);
+                    int rndpat = Random.Range(0, 3);
 
                     PatternAttack(rndpat);
                 }
@@ -126,7 +126,7 @@ public class Boss : CharacterMovement, IBattle
         StateProcess();
     }
 
-    public void PatternAttack(int i)
+    public virtual void PatternAttack(int i)
     {
 
     }
