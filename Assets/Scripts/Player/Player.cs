@@ -14,6 +14,7 @@ public class Player : CharacterMovement, IBattle
     public CharacterStat myStat;
     public List<List<int>> combolAttackList = new List<List<int>>();
     public List<List<int>> combohAttackList = new List<List<int>>();
+    public Sprite myIMG = null;
 
     /*
     public int[] playCombo = new int[2];

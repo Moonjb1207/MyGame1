@@ -36,8 +36,6 @@ public class Stage1Boss : Boss
 
             yield return null;
         }
-
-        curDelay += myStat.AttackDelay / 2;
     }
 
     //원형 공격 패턴

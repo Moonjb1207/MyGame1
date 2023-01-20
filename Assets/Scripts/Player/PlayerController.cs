@@ -50,6 +50,8 @@ public class PlayerController : MonoBehaviour
         combohAttackList = players[curIndex].combohAttackList;
         JumpPower = players[curIndex].JumpPower;
         DownPower = players[curIndex].DownPower;
+
+        StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
     }
 
     // Start is called before the first frame update
@@ -94,7 +96,14 @@ public class PlayerController : MonoBehaviour
         myCam.transform.SetParent(players[curIndex].transform);
 
         players[curIndex].InCharc();
+        ChangeCharcIMG();
     }
+
+    void ChangeCharcIMG()
+    {
+        StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
+    }
+
     
     void Controller()
     {
