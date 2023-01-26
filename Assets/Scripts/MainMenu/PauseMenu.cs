@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
+    static public PauseMenu Inst = null;
+
+    private void Awake()
+    {
+        Inst = this;
+    }
+
     enum MenuState
     {
         Main, Setting, Help,
@@ -11,6 +18,7 @@ public class PauseMenu : MonoBehaviour
 
     MenuState myState = MenuState.Main;
     public GameObject[] myMenu;
+    public bool IsPause = false;
 
     void ChangeState(MenuState s)
     {
@@ -68,12 +76,17 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMainSceneButton()
     {
-
+        LoadManager.Inst.ChangeScene("MainMenu");
     }
 
     public void MainQuitButton()
     {
+        Application.Quit();
+    }
 
+    public void MainBackButton()
+    {
+        Time.timeScale = 1.0f;
     }
 
     public void SettingBackButton()

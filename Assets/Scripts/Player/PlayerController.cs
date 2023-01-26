@@ -262,7 +262,7 @@ public class PlayerController : MonoBehaviour
         //Pause
         if (Input.GetKeyDown(KeyCode.P))
         {
-
+            Time.timeScale = 0.0f;
         }
     }
 }

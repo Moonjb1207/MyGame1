@@ -83,7 +83,7 @@ public class MainMenu : MonoBehaviour
 
     public void MainQuitButton()
     {
-
+        Application.Quit();
     }
 
     public void PlayPrevButton()
@@ -99,7 +99,7 @@ public class MainMenu : MonoBehaviour
     public void PlayPlayButton()
     {
         myPMenu.selectStage();
-        LoadManager.Inst.ChangeScene();
+        LoadManager.Inst.ChangeScene("GamePlay");
     }
 
     public void PlayBackButton()
@@ -114,7 +114,7 @@ public class MainMenu : MonoBehaviour
 
     public void SettingSaveButton()
     {
-
+        SoundSettingManager.Inst.SaveButton();
     }
 
     public void SettingBackButton()
