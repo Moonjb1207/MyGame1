@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public Player[] players = new Player[2];
     [SerializeField] int curIndex;
     public SpringArm myCam;
+    public GameObject Pause;
 
     [SerializeField]Animator myAnim;
     Rigidbody myRigid;
@@ -263,6 +264,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             Time.timeScale = 0.0f;
+            Pause.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

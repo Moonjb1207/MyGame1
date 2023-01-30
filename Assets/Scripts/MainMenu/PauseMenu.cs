@@ -87,6 +87,9 @@ public class PauseMenu : MonoBehaviour
     public void MainBackButton()
     {
         Time.timeScale = 1.0f;
+        PlayerController.Inst.Pause.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void SettingBackButton()
