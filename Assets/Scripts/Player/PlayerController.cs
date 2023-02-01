@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public Player[] players = new Player[2];
     [SerializeField] int curIndex;
     public SpringArm myCam;
+    public GameObject myEar;
     public GameObject Pause;
 
     [SerializeField]Animator myAnim;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         players[curIndex].gameObject.SetActive(true);
 
         myCam.transform.SetParent(players[curIndex].transform);
+        myEar.transform.SetParent(players[curIndex].myListener.transform);
 
         players[curIndex].InCharc();
 
@@ -95,6 +97,7 @@ public class PlayerController : MonoBehaviour
         players[curIndex].gameObject.SetActive(true);
 
         myCam.transform.SetParent(players[curIndex].transform);
+        myEar.transform.SetParent(players[curIndex].myListener.transform);
 
         players[curIndex].InCharc();
         ChangeCharcIMG();

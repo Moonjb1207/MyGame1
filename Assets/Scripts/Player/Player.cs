@@ -24,6 +24,7 @@ public class Player : CharacterMovement, IBattle
     public bool IsRightCombo = false;
     */
 
+    public GameObject myListener;
     public bool IsComboable = false;
     public float JumpPower = 7.0f;
     public float DownPower = 7.0f;
