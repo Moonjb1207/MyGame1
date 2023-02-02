@@ -152,4 +152,9 @@ public class HammerPlayer : Player
             Damaging(col, 30.0f, 0);
         }
     }
+
+    public void PlayingEfSound_1()
+    {
+        EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(myHitPos.position), HitSound);
+    }
 }

@@ -77,6 +77,7 @@ public class PauseMenu : MonoBehaviour
     public void MainMainSceneButton()
     {
         LoadManager.Inst.ChangeScene("MainMenu");
+        Destroy(LoadManager.Inst.gameObject);
     }
 
     public void MainQuitButton()
@@ -99,7 +100,7 @@ public class PauseMenu : MonoBehaviour
 
     public void SettingSaveButton()
     {
-
+        SoundSettingManager.Inst.SaveButton();
     }
 
     public void HelpBackButton()

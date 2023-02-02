@@ -128,6 +128,9 @@ public class StageSystem : MonoBehaviour
     void Start()
     {
         ChangeState(StageState.Start);
+
+        BGSoundManager.Inst.myBG.clip = BGSoundManager.Inst.PlayBG;
+        BGSoundManager.Inst.myBG.Play();
     }
 
     // Update is called once per frame
@@ -146,7 +149,8 @@ public class StageSystem : MonoBehaviour
 
             spawnEnemy++;
 
-            GameObject obj = Instantiate(Resources.Load("Prefabs/Stage/Enemy") as GameObject, spawnPos[Random.Range(0,3)].position, spawnPos[Random.Range(0, 3)].rotation);
+            GameObject obj = Instantiate(Resources.Load("Prefabs/Stage/Enemy") as GameObject, 
+                spawnPos[Random.Range(0,3)].position, spawnPos[Random.Range(0, 3)].rotation);
 
             Enemy scp = obj.GetComponent<Enemy>();
             spawnEnemies.Add(scp);

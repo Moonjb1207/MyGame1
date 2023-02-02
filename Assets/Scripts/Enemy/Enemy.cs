@@ -19,6 +19,14 @@ public class Enemy : CharacterMovement, IBattle
 
     [SerializeField] GameObject[] OnDamagedEf = new GameObject[2];
     [SerializeField] Transform SpinePos;
+
+    public AudioClip DamagedSound = null;
+    public AudioClip HitSound = null;
+
+    public Transform spinePos
+    {
+        get => SpinePos;
+    }
     
     float spearSize = 0.5f;
     
@@ -103,6 +111,8 @@ public class Enemy : CharacterMovement, IBattle
             {
                 curDelay = 0.0f;
                 myAnim.SetTrigger("Attack");
+
+                EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(myHitPos.position), HitSound);
             }
         }
     }
@@ -165,6 +175,8 @@ public class Enemy : CharacterMovement, IBattle
         {
             myStat.CurHP -= dmg;
             playEffect(i);
+
+            EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(SpinePos.position), DamagedSound);
 
             if (myStat.CurHP <= 0.0f)
             {

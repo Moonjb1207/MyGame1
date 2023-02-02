@@ -41,21 +41,31 @@ public class SoundSettingManager : MonoBehaviour
 
     public void ChangeSound(int num)
     {
+        Sound[num].value = float.Parse(Soundnum[num].text) / 100;
+
         if (num > 0 && Sound[num].value > Sound[0].value)
         {
             Sound[num].value = Sound[0].value;
         }
-
-        Sound[num].value = float.Parse(Soundnum[num].text) / 100;
+        else if (num == 0)
+        {
+            Sound[1].value = Sound[0].value;
+            Sound[2].value = Sound[0].value;
+        }
     }
 
     public void ChangeSound_Slider(int num)
     {
+        Soundnum[num].text = ((int)(Sound[num].value * 100)).ToString();
+
         if (num > 0 && Sound[num].value > Sound[0].value)
         {
             Sound[num].value = Sound[0].value;
         }
-
-        Soundnum[num].text = ((int)(Sound[num].value * 100)).ToString();
+        else if (num == 0)
+        {
+            Sound[1].value = Sound[0].value;
+            Sound[2].value = Sound[0].value;
+        }
     }
 }

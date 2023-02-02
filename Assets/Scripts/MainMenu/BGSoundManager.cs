@@ -14,15 +14,15 @@ public class BGSoundManager : MonoBehaviour
     private void Awake()
     {
         Inst = this;
-        myBG = GetComponentInChildren<AudioSource>();
-
-        myBG.volume = SettingManager.Inst.BGSound;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        myBG.volume = SettingManager.Inst.BGSound;
+        myBG.clip = MainBG;
+
+        myBG.Play();
     }
 
     // Update is called once per frame

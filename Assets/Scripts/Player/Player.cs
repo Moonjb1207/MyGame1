@@ -34,10 +34,17 @@ public class Player : CharacterMovement, IBattle
     [SerializeField] GameObject SpecialEf;
     [SerializeField] GameObject JumpAtEf;
 
+    public Transform spinePos
+    {
+        get => SpinePos;
+    }
 
     public LayerMask myGround = default;
     public LayerMask myEnemy = default;
     public Transform myHitPos = null;
+
+    public AudioClip DamagedSound = null;
+    public AudioClip HitSound = null;
 
     /*
     { { 0, 0, 1 }, { 0, 1, 0 } }
@@ -50,7 +57,10 @@ public class Player : CharacterMovement, IBattle
     {
         myStat.CurHP -= dmg;
         StageUI.Inst.Player.value = myStat.CurHP / myStat.MaxHP;
+
         playEffect(i);
+        EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(SpinePos.position), DamagedSound);
+
 
         if (myStat.CurHP <= 0.0f)
         {

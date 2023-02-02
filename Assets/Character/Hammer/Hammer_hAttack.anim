@@ -45932,6 +45932,13 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.6666667
+    functionName: PlayingEfSound_1
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.7
     functionName: OnhAttack
     data: 
     objectReferenceParameter: {fileID: 0}

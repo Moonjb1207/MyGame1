@@ -8,6 +8,8 @@ public class EffectSoundManager : MonoBehaviour
 
     float effectVolume;
 
+    public Queue<GameObject> efSoundQueue = new Queue<GameObject>();
+
     public float EffectVolume
     {
         get => effectVolume;
@@ -37,8 +39,44 @@ public class EffectSoundManager : MonoBehaviour
         effectVolume = f;
     }
 
-    public void CreateEffectSound(Vector3 pos)
+    public GameObject CreateEffectSound(Vector3 pos)
     {
+        GameObject obj;
 
+        if (efSoundQueue.Count == 0)
+        {
+            obj = Instantiate(Resources.Load("Prefabs/EfSound") as GameObject, pos, Quaternion.identity, this.transform);
+
+        }
+        else
+        {
+            obj = efSoundQueue.Dequeue();
+
+        }
+        obj.SetActive(true);
+
+        return obj;
+    }
+
+    public void PlayEfSound(GameObject obj, AudioClip efs)
+    {
+        StartCoroutine(PlayingSound(obj, efs));
+    }
+
+    IEnumerator PlayingSound(GameObject obj, AudioClip efs)
+    {
+        AudioSource myClip = obj.GetComponent<AudioSource>();
+        myClip.clip = efs;
+        myClip.volume = effectVolume;
+
+        myClip.Play();
+
+        while (myClip.isPlaying)
+        {
+            yield return null;
+        }
+
+        efSoundQueue.Enqueue(obj);
+        obj.SetActive(false);
     }
 }

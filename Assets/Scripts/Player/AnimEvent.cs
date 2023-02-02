@@ -16,6 +16,8 @@ public class AnimEvent : MonoBehaviour
     public UnityEvent ComboCheckEnd = null;
     public UnityEvent Dead = null;
 
+    public UnityEvent PlayEfSound_1 = null;
+
     public void OnDead()
     {
         Dead?.Invoke();
@@ -60,4 +62,8 @@ public class AnimEvent : MonoBehaviour
         ComboCheckEnd?.Invoke();
     }
 
+    public void PlayingEfSound_1()
+    {
+
+    }
 }
