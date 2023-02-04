@@ -27,11 +27,11 @@ public class Enemy : CharacterMovement, IBattle
     {
         get => SpinePos;
     }
-    
-    float spearSize = 0.5f;
+
+    protected float spearSize = 0.5f;
     
 
-    protected void ChangeState(STATE ms)
+    protected virtual void ChangeState(STATE ms)
     {
         if (myState == ms) return;
         myState = ms;
@@ -64,7 +64,7 @@ public class Enemy : CharacterMovement, IBattle
         }
     }
 
-    protected void StateProcess()
+    protected virtual void StateProcess()
     {
         switch (myState)
         {
@@ -163,7 +163,7 @@ public class Enemy : CharacterMovement, IBattle
 
     }
 
-    void Appear()
+    protected void Appear()
     {
         myAnim.SetBool("IsAir", true);
         myRigid.AddForce(Vector3.forward * 3.0f, ForceMode.Impulse);

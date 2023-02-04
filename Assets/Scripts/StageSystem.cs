@@ -48,6 +48,7 @@ public class StageSystem : MonoBehaviour
                 clearEnemy = 0;
                 break;
             case StageState.Boss:
+                StopAllCoroutines();
                 BossSpawn();
                 stageTime = stageList[stage].BossTime;
                 StageUI.Inst.Time.value = stageTime / stageList[stage].BossTime;

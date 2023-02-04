@@ -34,6 +34,7 @@ public class Stage1Boss : Boss
         while (true)
         {
 
+
             yield return null;
         }
     }

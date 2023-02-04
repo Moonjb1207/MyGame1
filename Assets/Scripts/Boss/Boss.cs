@@ -3,21 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Boss : CharacterMovement, IBattle
+public class Boss : Enemy
 {
-    public enum STATE
-    {
-        Create, Normal, Battle, Dead,
-    }
-
-    STATE myState = STATE.Create;
-    public EnemyStat myStat;
-    public float curDelay = 0.0f;
-    public AIPerception mySensor = null;
-    public LayerMask myGround = default;
-
-
-    protected void ChangeState(STATE ms)
+    protected override void ChangeState(STATE ms)
     {
         if (myState == ms) return;
         myState = ms;
@@ -49,7 +37,7 @@ public class Boss : CharacterMovement, IBattle
         }
     }
 
-    protected void StateProcess()
+    protected override void StateProcess()
     {
         switch (myState)
         {
@@ -86,25 +74,6 @@ public class Boss : CharacterMovement, IBattle
                 break;
             case STATE.Dead:
                 break;
-        }
-    }
-
-    void Appear()
-    {
-        myAnim.SetBool("IsAir", true);
-        myRigid.AddForce(Vector3.forward * 3.0f, ForceMode.Impulse);
-    }
-
-    public void OnDamage(float dmg, int i)
-    {
-
-    }
-
-    public bool IsLive
-    {
-        get
-        {
-            return true;
         }
     }
 
