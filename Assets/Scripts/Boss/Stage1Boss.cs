@@ -29,13 +29,16 @@ public class Stage1Boss : Boss
 
     IEnumerator Attacking_1()
     {
-        Vector3 Target = mySensor.myTarget.transform.position;
-
-        while (true)
+        for (int i = 0; i < 3; i++)
         {
+            Vector3 Target = mySensor.myTarget.transform.position;
+
+            while (true)
+            {
 
 
-            yield return null;
+                yield return null;
+            }
         }
     }
 
