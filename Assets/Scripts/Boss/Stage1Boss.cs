@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Stage1Boss : Boss
 {
+    float linerAttackMax = 20.0f;
+    float linerAttackSpeed = 10.0f;
+
+    float circleAttackSpeed = 5.0f;
+
+    int randomAttackCount = 10;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -36,11 +43,23 @@ public class Stage1Boss : Boss
     {
         for (int i = 0; i < 3; i++)
         {
-            Vector3 Target = mySensor.myTarget.transform.position;
+            Transform Target = mySensor.myTarget.transform;
 
-            while (true)
+            StarePlayer(Target, myStat.RotSpeed * 2);
+
+            float dist = 0.0f;
+
+            while (dist < linerAttackMax)
             {
+                float delta = linerAttackSpeed * Time.deltaTime;
 
+                if (delta > linerAttackMax - dist)
+                {
+                    delta = linerAttackMax - dist;
+                }
+                dist += delta;
+
+                transform.Translate(transform.forward * delta, Space.World);
 
                 yield return null;
             }
@@ -57,24 +76,44 @@ public class Stage1Boss : Boss
 
     IEnumerator Attacking_2()
     {
-        yield return null;
+        Transform Target = mySensor.myTarget.transform;
+        Vector3 dir = Target.position - transform.position;
+        float dist = dir.magnitude / 2;
+
+        StarePlayer(Target, myStat.RotSpeed * 2);
+        myRigid.AddForce(transform.up * 7.0f, ForceMode.Acceleration);
+
+        while(dist <= 0)
+        {
+            float delta = circleAttackSpeed * Time.deltaTime;
+
+            if (dist < delta)
+            {
+                delta = dist;
+            }
+            dist -= delta;
+
+            transform.Translate(transform.forward * delta, Space.World);
+
+            yield return null;
+        }
+
+        IsPatternEnd = true;
     }
 
     //여러 무작위 위치 폭격 패턴
     void Pattern_3()
     {
-        StartCoroutine(Attacking_3());
-    }
+        for (int i = 0; i < randomAttackCount; i++)
+        {
 
-    IEnumerator Attacking_3()
-    {
-        yield return null;
+        }
     }
 
     //원뿔 공격 패턴
     void Pattern_4()
     {
-
+        StartCoroutine(Attacking_4());
     }
 
     IEnumerator Attacking_4()

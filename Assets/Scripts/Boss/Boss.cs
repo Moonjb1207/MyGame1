@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Boss : Enemy
 {
-    protected bool IsPatternEnd = true;
+    protected bool IsPatternEnd = false;
 
     protected override void ChangeState(STATE ms)
     {
@@ -57,7 +57,7 @@ public class Boss : Enemy
                     ChangeState(STATE.Battle);
                 break;
             case STATE.Battle:
-                if (mySensor.myTarget != null && !mySensor.myTargetB.IsLive)
+                if (mySensor.myTarget == null || !mySensor.myTargetB.IsLive)
                 {
                     mySensor.LostTarget();
                 }
@@ -66,7 +66,8 @@ public class Boss : Enemy
                 {
                     curDelay += Time.deltaTime;
                 }
-
+                
+                /*
                 if (curDelay >= myStat.AttackDelay)
                 {
                     int rndpat = Random.Range(0, 3);
@@ -74,6 +75,7 @@ public class Boss : Enemy
                     StopAllCoroutines();
                     PatternAttack(rndpat);
                 }
+                */
 
                 if (IsPatternEnd)
                 {
