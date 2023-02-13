@@ -17,7 +17,7 @@ public class AIPerception : MonoBehaviour
     }
 
     
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if ((myEnemy & 1 << other.gameObject.layer) != 0)
         {

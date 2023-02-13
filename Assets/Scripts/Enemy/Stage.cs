@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class Boss : Enemy
+public class Stage : Enemy, IBattle
 {
-    protected bool IsPatternEnd = true;
-
     protected override void ChangeState(STATE ms)
     {
         if (myState == ms) return;
@@ -21,10 +18,7 @@ public class Boss : Enemy
             case STATE.Battle:
                 curDelay = myStat.AttackDelay;
                 if (mySensor.myTarget != null)
-                {
-                    StarePlayer(mySensor.myTarget.transform, myStat.RotSpeed);
-                    IsPatternEnd = false;
-                }
+                    FollowTarget(mySensor.myTarget.transform, myStat.MoveSpeed, myStat.RotSpeed, attackRange, Attacking);
                 break;
             case STATE.Dead:
                 StageSystem.Inst.spawnEnemy--;
@@ -36,6 +30,9 @@ public class Boss : Enemy
                 mySensor.enabled = false;
                 myRigid.useGravity = false;
                 myCollider.enabled = false;
+                break;
+            case STATE.RunAway:
+                Running();
                 break;
         }
     }
@@ -52,7 +49,7 @@ public class Boss : Enemy
                     myAnim.SetBool("IsAir", false);
                     myAnim.SetTrigger("Landing");
                 }
-                
+
                 if (mySensor.myTarget != null && myAnim.GetBool("endAppear"))
                     ChangeState(STATE.Battle);
                 break;
@@ -60,28 +57,21 @@ public class Boss : Enemy
                 if (mySensor.myTarget != null && !mySensor.myTargetB.IsLive)
                 {
                     mySensor.LostTarget();
+                    ChangeState(STATE.Normal);
                 }
 
                 if (!myAnim.GetBool("IsAttacking"))
                 {
                     curDelay += Time.deltaTime;
                 }
-
-                if (curDelay >= myStat.AttackDelay)
-                {
-                    int rndpat = Random.Range(0, 3);
-
-                    StopAllCoroutines();
-                    PatternAttack(rndpat);
-                }
-
-                if (IsPatternEnd)
-                {
-                    StarePlayer(mySensor.myTarget.transform, myStat.RotSpeed);
-                    IsPatternEnd = false;
-                }
                 break;
             case STATE.Dead:
+                break;
+            case STATE.RunAway:
+                if (!myAnim.GetBool("IsJumping"))
+                {
+                    Destroy(gameObject);
+                }
                 break;
         }
     }
@@ -89,8 +79,9 @@ public class Boss : Enemy
     private void Awake()
     {
         ChangeState(STATE.Normal);
-        myStat.IsBoss = true;
+        myStat.IsBoss = false;
     }
+
 
     // Start is called before the first frame update
     protected override void Start()
@@ -102,10 +93,5 @@ public class Boss : Enemy
     protected override void Update()
     {
         base.Update();
-    }
-
-    public virtual void PatternAttack(int i)
-    {
-
     }
 }

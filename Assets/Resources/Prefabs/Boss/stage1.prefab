@@ -60,7 +60,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 20
   m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!1 &3060970975539787830
 GameObject:
@@ -555,7 +555,7 @@ Animator:
   m_GameObject: {fileID: 5938730092114143010}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ec9ce9573683d684aa75013daec3884d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3b89ed511c7f1ea47896153a09b89520, type: 2}
+  m_Controller: {fileID: 9100000, guid: 40365f4dadb20a540bc6287051bb52f0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -579,19 +579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attack:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: OnAttack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   Dead:
     m_PersistentCalls:
       m_Calls: []

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public delegate void MyAction();
+public delegate void MyAction2(Transform a, float b);
 
 public class CharacterMovement : CharacterProperty
 {
@@ -72,19 +73,21 @@ public class CharacterMovement : CharacterProperty
 
     protected void StarePlayer(Transform target, float rotSpeed)
     {
-        StartCoroutine(Staring(target, rotSpeed));
+        if (coFollow != null) StopCoroutine(coFollow);
+        coFollow = StartCoroutine(Staring(target, rotSpeed));
     }
 
     IEnumerator Staring(Transform target, float rotSpeed)
     {
-        while (true)
+        while (target != null)
         {
             float rdelta = rotSpeed * Time.deltaTime;
 
             Vector3 dir = target.position - transform.position;
 
-            Vector3 rot = Vector3.RotateTowards(transform.forward, dir, rdelta * Mathf.Deg2Rad, 0.0f);
+            dir.y = 0.0f;
 
+            Vector3 rot = Vector3.RotateTowards(transform.forward, dir, rdelta * Mathf.Deg2Rad, 0.0f);
             transform.rotation = Quaternion.LookRotation(rot);
 
             yield return null;

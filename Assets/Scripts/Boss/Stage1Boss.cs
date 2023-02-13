@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class Stage1Boss : Boss
 {
-    private void Awake()
-    {
-        
-    }
-
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
 
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+    }
 
+    protected override void ChangeState(STATE ms)
+    {
+        base.ChangeState(ms);
+    }
+
+    protected override void StateProcess()
+    {
+        base.StateProcess();
     }
 
     //돌진 패턴
@@ -40,6 +45,8 @@ public class Stage1Boss : Boss
                 yield return null;
             }
         }
+
+        IsPatternEnd = true;
     }
 
     //원형 공격 패턴
@@ -60,6 +67,17 @@ public class Stage1Boss : Boss
     }
 
     IEnumerator Attacking_3()
+    {
+        yield return null;
+    }
+
+    //원뿔 공격 패턴
+    void Pattern_4()
+    {
+
+    }
+
+    IEnumerator Attacking_4()
     {
         yield return null;
     }
