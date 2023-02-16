@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Stage1Boss : Boss
 {
+    public GameObject[] RanAttWarn = new GameObject[10];
+    public GameObject LinerAttWarn;
+    public GameObject CircleAttWarn;
+
     float linerAttackMax = 20.0f;
     float linerAttackSpeed = 10.0f;
 
     float circleAttackSpeed = 5.0f;
 
     int randomAttackCount = 10;
+
+    bool endWarning = false;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -33,6 +39,11 @@ public class Stage1Boss : Boss
         base.StateProcess();
     }
 
+    bool EndWarning()
+    {
+        return endWarning;
+    }
+
     //돌진 패턴
     void Pattern_1()
     {
@@ -41,6 +52,10 @@ public class Stage1Boss : Boss
 
     IEnumerator Attacking_1()
     {
+        StartCoroutine(LinerWarning());
+
+        yield return new WaitUntil(EndWarning);
+
         for (int i = 0; i < 3; i++)
         {
             Transform Target = mySensor.myTarget.transform;
@@ -66,6 +81,29 @@ public class Stage1Boss : Boss
         }
 
         IsPatternEnd = true;
+        endWarning = false;
+    }
+    
+    IEnumerator LinerWarning()
+    {
+        LinerAttWarn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        LinerAttWarn.transform.position = Vector3.zero;
+
+        Vector3 scale = new Vector3(1.0f, 1.0f, 1.0f);
+        Vector3 pos = Vector3.zero;
+
+        while (LinerAttWarn.transform.localScale.y > 10.0f)
+        {
+            scale.y += Time.deltaTime;
+            LinerAttWarn.transform.localScale = scale;
+
+            pos.z += Time.deltaTime / 2;
+            LinerAttWarn.transform.position = pos;
+
+            yield return null;
+        }
+
+        endWarning = true;
     }
 
     //원형 공격 패턴
@@ -76,6 +114,10 @@ public class Stage1Boss : Boss
 
     IEnumerator Attacking_2()
     {
+        StartCoroutine(CircleWarning());
+
+        yield return new WaitUntil(EndWarning);
+
         Transform Target = mySensor.myTarget.transform;
         Vector3 dir = Target.position - transform.position;
         float dist = dir.magnitude / 2;
@@ -99,6 +141,30 @@ public class Stage1Boss : Boss
         }
 
         IsPatternEnd = true;
+        endWarning = false;
+    }
+
+    IEnumerator CircleWarning()
+    {
+        Transform Target = mySensor.myTarget.transform;
+        Vector3 dir = Target.position - transform.position;
+        float dist = dir.magnitude / 2;
+
+        CircleAttWarn.transform.Translate(transform.forward * dist, Space.World);
+
+        Vector3 scale = Vector3.zero;
+
+        while (scale.x > 7.0f)
+        {
+            scale.x += Time.deltaTime;
+            scale.y += Time.deltaTime;
+
+            CircleAttWarn.transform.localScale = scale;
+
+            yield return null;
+        }
+
+        endWarning = true;
     }
 
     //여러 무작위 위치 폭격 패턴
