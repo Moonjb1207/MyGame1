@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class Boss : Enemy
 {
-    protected bool IsPatternEnd = false;
+    protected bool IsAttacking = false;
 
     protected override void ChangeState(STATE ms)
     {
@@ -23,7 +23,6 @@ public class Boss : Enemy
                 if (mySensor.myTarget != null)
                 {
                     StarePlayer(mySensor.myTarget.transform, myStat.RotSpeed);
-                    IsPatternEnd = false;
                 }
                 break;
             case STATE.Dead:
@@ -47,7 +46,7 @@ public class Boss : Enemy
             case STATE.Create:
                 break;
             case STATE.Normal:
-                if (Physics.Raycast(transform.position, Vector3.down, 0.1f, myGround) && myAnim.GetBool("IsAir"))
+                if (Physics.Raycast(transform.position, Vector3.down, 0.3f, myGround) && myAnim.GetBool("IsAir"))
                 {
                     myAnim.SetBool("IsAir", false);
                     myAnim.SetTrigger("Landing");
@@ -62,25 +61,11 @@ public class Boss : Enemy
                     mySensor.LostTarget();
                 }
 
-                if (!myAnim.GetBool("IsAttacking"))
+                if (!IsAttacking)
                 {
-                    curDelay += Time.deltaTime;
-                }
-                
-                /*
-                if (curDelay >= myStat.AttackDelay)
-                {
-                    int rndpat = Random.Range(0, 3);
-
                     StopAllCoroutines();
-                    PatternAttack(rndpat);
-                }
-                */
-
-                if (IsPatternEnd)
-                {
                     StarePlayer(mySensor.myTarget.transform, myStat.RotSpeed);
-                    IsPatternEnd = false;
+                    curDelay += Time.deltaTime;
                 }
                 break;
             case STATE.Dead:
@@ -109,5 +94,18 @@ public class Boss : Enemy
     public virtual void PatternAttack(int i)
     {
 
+    }
+
+    protected GameObject playEffect(GameObject obj, Vector3 pos, Transform par = null)
+    {
+        GameObject temp = null;
+        if (par != null)
+            temp = Instantiate(obj, par);
+        else
+            temp = Instantiate(obj);
+
+        obj.transform.position = pos;
+
+        return temp;
     }
 }

@@ -8,6 +8,7 @@ public class EnemyAnimEvent : MonoBehaviour
 {
     public UnityEvent Attack = null;
     public UnityEvent Dead = null;
+    public UnityEvent WarnEnd = null;
 
     public void OnAttack()
     {
@@ -17,5 +18,10 @@ public class EnemyAnimEvent : MonoBehaviour
     public void OnDead()
     {
         Dead?.Invoke();
+    }
+
+    public void OnWarnEnd()
+    {
+        WarnEnd?.Invoke();
     }
 }

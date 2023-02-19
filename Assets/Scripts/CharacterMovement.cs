@@ -93,4 +93,29 @@ public class CharacterMovement : CharacterProperty
             yield return null;
         }
     }
+
+    protected void StarePlayerOnce(Transform target, float rotSpeed)
+    {
+        if (coFollow != null) StopCoroutine(coFollow);
+        coFollow = StartCoroutine(StaringOnce(target, rotSpeed));
+    }
+
+    IEnumerator StaringOnce(Transform target, float rotSpeed)
+    {
+        Vector3 dir = target.position - transform.position;
+
+        dir.y = 0.0f;
+
+        while (target != null)
+        {
+            float rdelta = rotSpeed * Time.deltaTime;
+
+            dir.y = 0.0f;
+
+            Vector3 rot = Vector3.RotateTowards(transform.forward, dir, rdelta * Mathf.Deg2Rad, 0.0f);
+            transform.rotation = Quaternion.LookRotation(rot);
+
+            yield return null;
+        }
+    }
 }

@@ -60,7 +60,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Radius: 20
   m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!1 &3060970975539787830
 GameObject:
@@ -71,7 +71,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3060970975539787831}
-  - component: {fileID: 3060970975539787824}
+  - component: {fileID: -4469701044065378059}
+  - component: {fileID: -3574368972892730884}
   - component: {fileID: 3060970975539787827}
   - component: {fileID: 3060970975539787826}
   - component: {fileID: 3060970975539787825}
@@ -99,7 +100,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!114 &3060970975539787824
+--- !u!114 &-4469701044065378059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,7 +109,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3060970975539787830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e504d128f0b524c47a5486440b1d0cb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 22bc8c572afe746468049753a09abb14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myState: 0
@@ -117,6 +118,46 @@ MonoBehaviour:
   curDelay: 0
   myHitPos: {fileID: 3060970975683782873}
   attackRange: 2
+  myGround:
+    serializedVersion: 2
+    m_Bits: 256
+  OnDamagedEf:
+  - {fileID: 4021103657954561961, guid: 10066462b66c0c245923da08bc822a96, type: 3}
+  - {fileID: 4553287630450876385, guid: e5bf9655569081140a96058ef1c80040, type: 3}
+  SpinePos: {fileID: 1399019692536718274}
+  DamagedSound: {fileID: 8300000, guid: 6ae0fd2aaa062c142ac49971c6db5bbb, type: 3}
+  HitSound: {fileID: 8300000, guid: 56ec4eed8504c6b4abf4b7f8836bbba3, type: 3}
+--- !u!114 &-3574368972892730884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3060970975539787830}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6502d411bf5eae5468233f96535b8e4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myState: 0
+  myStat: {fileID: 3060970975539787827}
+  mySensor: {fileID: 3060970974659634713}
+  curDelay: 0
+  myHitPos: {fileID: 3060970975683782873}
+  attackRange: 2
+  myGround:
+    serializedVersion: 2
+    m_Bits: 256
+  OnDamagedEf:
+  - {fileID: 4021103657954561961, guid: 10066462b66c0c245923da08bc822a96, type: 3}
+  - {fileID: 4553287630450876385, guid: e5bf9655569081140a96058ef1c80040, type: 3}
+  SpinePos: {fileID: 1399019692536718274}
+  DamagedSound: {fileID: 8300000, guid: 6ae0fd2aaa062c142ac49971c6db5bbb, type: 3}
+  HitSound: {fileID: 8300000, guid: 56ec4eed8504c6b4abf4b7f8836bbba3, type: 3}
+  PatEf:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &3060970975539787827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +180,7 @@ MonoBehaviour:
   attackDelay: 0
   damagedDelay: 0
   isdmgDelay: 0
+  IsBoss: 0
 --- !u!136 &3060970975539787826
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -200,6 +242,37 @@ Transform:
   m_Father: {fileID: 1562644552075938585}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.443, y: -7.605, z: 77.608}
+--- !u!1 &6080193074827662589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1399019692536718274}
+  m_Layer: 10
+  m_Name: SpinePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1399019692536718274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6080193074827662589}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8863688804955822367}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3060970974425302451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -514,7 +587,7 @@ Animator:
   m_GameObject: {fileID: 5938730092114143010}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ec9ce9573683d684aa75013daec3884d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3b89ed511c7f1ea47896153a09b89520, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9b82831c3fce48e42a5ee3e5e426abeb, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -538,10 +611,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attack:
     m_PersistentCalls:
+      m_Calls: []
+  Dead:
+    m_PersistentCalls:
+      m_Calls: []
+  WarnEnd:
+    m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3060970975539787824}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: OnAttack
+      - m_Target: {fileID: -3574368972892730884}
+        m_TargetAssemblyTypeName: Stage1Boss, Assembly-CSharp
+        m_MethodName: PatWarnEnd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -554,5 +633,10 @@ MonoBehaviour:
 --- !u!4 &5938730092114311938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8651515420689546929, guid: ff63b0a2a76305f418eac6f15d340dad, type: 3}
+  m_PrefabInstance: {fileID: 3060970974425302451}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8863688804955822367 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5870695979939355820, guid: ff63b0a2a76305f418eac6f15d340dad, type: 3}
   m_PrefabInstance: {fileID: 3060970974425302451}
   m_PrefabAsset: {fileID: 0}

@@ -19,9 +19,9 @@ MonoBehaviour:
   boss:
     maxHP: 200
     moveSpeed: 4
-    attackDelay: 2
+    attackDelay: 3
     bossName: stage1
-  stageTime: 30
+  stageTime: 5
   bossTime: 60
   enemyCount: 10
   stageLevel: 1

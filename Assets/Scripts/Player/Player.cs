@@ -117,6 +117,10 @@ public class Player : CharacterMovement, IBattle
             case STATE.Create:
                 break;
             case STATE.Normal:
+                if (StageSystem.Inst.myState == StageSystem.StageState.GameOver)
+                {
+                    gameObject.SetActive(false);
+                }
                 break;
             case STATE.Dead:
                 break;
@@ -302,7 +306,7 @@ public class Player : CharacterMovement, IBattle
         IBattle ib = col.GetComponent<IBattle>();
         ib?.OnDamage(dmg, i);
         Enemy enemy = col.GetComponent<Enemy>();
-        enemy.myStat.DamagedDelay = 0.5f;
+        enemy.myStat.DamagedDelay = 0.2f;
         enemy.myStat.IsdmgDelay = true;
     }
 }

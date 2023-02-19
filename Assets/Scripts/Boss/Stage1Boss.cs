@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class Stage1Boss : Boss
 {
-    public GameObject[] RanAttWarn = new GameObject[10];
-    public GameObject LinerAttWarn;
-    public GameObject CircleAttWarn;
-
     float linerAttackMax = 20.0f;
-    float linerAttackSpeed = 10.0f;
-
-    float circleAttackSpeed = 5.0f;
-
+    float linerAttackSpeed = 15.0f;
+    float circleAttackSpeed = 2.5f;
     int randomAttackCount = 10;
+    bool endPat = true;
+    bool IsTrigger = false;
+    bool endWarn = false;
+    GameObject[] spears = new GameObject[10];
 
-    bool endWarning = false;
+    public GameObject[] PatEf = new GameObject[3];
 
     // Start is called before the first frame update
     protected override void Start()
@@ -36,96 +34,141 @@ public class Stage1Boss : Boss
 
     protected override void StateProcess()
     {
-        base.StateProcess();
-    }
-
-    bool EndWarning()
-    {
-        return endWarning;
-    }
-
-    //돌진 패턴
-    void Pattern_1()
-    {
-        StartCoroutine(Attacking_1());
-    }
-
-    IEnumerator Attacking_1()
-    {
-        StartCoroutine(LinerWarning());
-
-        yield return new WaitUntil(EndWarning);
-
-        for (int i = 0; i < 3; i++)
+        if (myState == STATE.Battle)
         {
-            Transform Target = mySensor.myTarget.transform;
-
-            StarePlayer(Target, myStat.RotSpeed * 2);
-
-            float dist = 0.0f;
-
-            while (dist < linerAttackMax)
+            if (curDelay >= myStat.AttackDelay)
             {
-                float delta = linerAttackSpeed * Time.deltaTime;
+                int rnd = Random.Range(0, 3);
+                PatternAttack(rnd);
 
-                if (delta > linerAttackMax - dist)
-                {
-                    delta = linerAttackMax - dist;
-                }
-                dist += delta;
-
-                transform.Translate(transform.forward * delta, Space.World);
-
-                yield return null;
+                IsAttacking = !IsAttacking;
             }
         }
 
-        IsPatternEnd = true;
-        endWarning = false;
+        base.StateProcess();
     }
-    
-    IEnumerator LinerWarning()
+
+    bool EndPat()
     {
-        LinerAttWarn.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        LinerAttWarn.transform.position = Vector3.zero;
+        return endPat;
+    }
 
-        Vector3 scale = new Vector3(1.0f, 1.0f, 1.0f);
-        Vector3 pos = Vector3.zero;
-
-        while (LinerAttWarn.transform.localScale.y > 10.0f)
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((mySensor.myEnemy & 1 << other.gameObject.layer) != 0)
         {
-            scale.y += Time.deltaTime;
-            LinerAttWarn.transform.localScale = scale;
+            if (mySensor.myTargetB.IsLive && IsTrigger)
+            {
+                mySensor.myTargetB.OnDamage(10.0f, 1);
+            }
+        }
+    }
 
-            pos.z += Time.deltaTime / 2;
-            LinerAttWarn.transform.position = pos;
+    public void PatWarnEnd()
+    {
+        endWarn = !endWarn;
+    }
+
+    bool patWarnEnd()
+    {
+        return endWarn;
+    }
+
+    //===================================================================
+    //돌진 패턴
+    void Pattern_1()
+    {
+        StopAllCoroutines();
+        curDelay = 0.0f;
+
+        for (int i = 0; i < 3; i++)
+        {
+            StartCoroutine(Attacking_1(i));
+        }
+    }
+
+    IEnumerator Attacking_1(int i)
+    {
+        while (!endPat)
+        {
+            yield return new WaitUntil(EndPat);
+        }
+        endPat = !endPat;
+
+        Transform Target = mySensor.myTarget.transform;
+
+        StarePlayerOnce(Target, myStat.RotSpeed * 2);
+
+        float dist = 0.0f;
+
+        myAnim.SetTrigger("FRWarn");
+
+        while (!endWarn)
+        {
+            yield return new WaitUntil(patWarnEnd);
+        }
+        endWarn = !endWarn;
+
+        IsTrigger = !IsTrigger;
+        myCollider.isTrigger = true;
+        myRigid.useGravity = false;
+
+        myAnim.SetBool("IsFRunning", true);
+        GameObject temp = playEffect(PatEf[0], Vector3.zero, transform);
+
+        while (dist < linerAttackMax)
+        {
+
+            float delta = linerAttackSpeed * Time.deltaTime;
+
+            if (delta > linerAttackMax - dist)
+            {
+                delta = linerAttackMax - dist;
+            }
+            dist += delta;
+
+            transform.Translate(transform.forward * delta, Space.World);
 
             yield return null;
         }
+        myAnim.SetBool("IsFRunning", false);
+        Destroy(temp);
 
-        endWarning = true;
+        myCollider.isTrigger = false;
+        myRigid.useGravity = true;
+        IsTrigger = !IsTrigger;
+        endPat = !endPat;
+
+        if (i == 2)
+        {
+            IsAttacking = !IsAttacking;
+        }
+
+        yield return new WaitForSeconds(0.1f);
     }
 
+    //===================================================================
     //원형 공격 패턴
     void Pattern_2()
     {
+        StopAllCoroutines();
+        curDelay = 0.0f;
         StartCoroutine(Attacking_2());
     }
 
     IEnumerator Attacking_2()
     {
-        StartCoroutine(CircleWarning());
-
-        yield return new WaitUntil(EndWarning);
-
         Transform Target = mySensor.myTarget.transform;
         Vector3 dir = Target.position - transform.position;
         float dist = dir.magnitude / 2;
 
-        StarePlayer(Target, myStat.RotSpeed * 2);
-        myRigid.AddForce(transform.up * 7.0f, ForceMode.Acceleration);
+        StarePlayerOnce(Target, myStat.RotSpeed * 2);
 
-        while(dist <= 0)
+        myAnim.SetBool("JmpAtk", true);
+        myRigid.AddForce(transform.up * dist * 2.0f, ForceMode.Impulse);
+        myAnim.SetTrigger("Jump");
+
+        while(dist > 0)
         {
             float delta = circleAttackSpeed * Time.deltaTime;
 
@@ -137,45 +180,83 @@ public class Stage1Boss : Boss
 
             transform.Translate(transform.forward * delta, Space.World);
 
+            if (Physics.Raycast(transform.position, Vector3.down, 1.0f, myGround) && myAnim.GetBool("IsAir"))
+            {
+                myAnim.SetBool("IsAir", false);
+                myAnim.SetTrigger("AtkLanding");
+            }
+
             yield return null;
         }
 
-        IsPatternEnd = true;
-        endWarning = false;
-    }
+        playEffect(PatEf[1], Vector3.zero, transform);
 
-    IEnumerator CircleWarning()
-    {
-        Transform Target = mySensor.myTarget.transform;
-        Vector3 dir = Target.position - transform.position;
-        float dist = dir.magnitude / 2;
+        Collider[] list = Physics.OverlapSphere(myHitPos.position, 5.0f, mySensor.myEnemy);
 
-        CircleAttWarn.transform.Translate(transform.forward * dist, Space.World);
-
-        Vector3 scale = Vector3.zero;
-
-        while (scale.x > 7.0f)
+        foreach (Collider col in list)
         {
-            scale.x += Time.deltaTime;
-            scale.y += Time.deltaTime;
-
-            CircleAttWarn.transform.localScale = scale;
-
-            yield return null;
+            IBattle ib = col.GetComponent<IBattle>();
+            ib?.OnDamage(10.0f, 1);
         }
 
-        endWarning = true;
+        IsAttacking = !IsAttacking;
+        myAnim.SetBool("JmpAtk", false);
     }
 
+    //===================================================================
     //여러 무작위 위치 폭격 패턴
     void Pattern_3()
     {
+        StopAllCoroutines();
+        curDelay = 0.0f;
+
+        Vector3 pos = transform.position + new Vector3(0.0f, 5.0f, 0.0f);
+
+        playEffect(PatEf[2], pos);
+
+        myAnim.SetTrigger("RndAtk");
+
         for (int i = 0; i < randomAttackCount; i++)
         {
-
+            spears[i] = CreateSpear(pos);
         }
+
+        StartCoroutine(PatWait());
     }
 
+    public GameObject CreateSpear(Vector3 pos)
+    {
+        GameObject obj = Instantiate(Resources.Load("Prefabs/Weapons/Spear") as GameObject
+            , pos, Quaternion.identity);
+
+        return obj;
+    }
+
+    IEnumerator PatWait()
+    {
+        while (!endWarn)
+        {
+            yield return new WaitUntil(patWarnEnd);
+        }
+        endWarn = !endWarn;
+
+        for (int i = 0; i < randomAttackCount; i++)
+        {
+            float Randx, y, Randz;
+            Randx = Random.Range(-20.0f, 20.0f);
+            y = 0.2f;
+            Randz = Random.Range(-20.0f, 20.0f);
+            Vector3 target = transform.position + new Vector3(Randx, y, Randz);
+
+            spears[i].GetComponent<SpearAttack>().Attack(target);
+        }
+
+        yield return new WaitForSeconds(1.0f);
+
+        IsAttacking = !IsAttacking;
+    }
+
+    //===================================================================
     //원뿔 공격 패턴
     void Pattern_4()
     {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class StageSystem : MonoBehaviour
 {
-    enum StageState
+    public enum StageState
     {
         Menu, Start, Enemy, Boss, Clear, GameOver
     }
@@ -15,10 +15,11 @@ public class StageSystem : MonoBehaviour
     public Transform[] spawnPos;
     public StageData[] stageList;
     public string[] explains;
+    public GameObject GameOver;
 
     public List<Enemy> spawnEnemies = new List<Enemy>();
     
-    StageState myState = StageState.Menu;
+    public StageState myState = StageState.Menu;
     public int stage;
     float stageTime;
     public int clearEnemy;
@@ -63,6 +64,9 @@ public class StageSystem : MonoBehaviour
                 break;
             case StageState.GameOver:
                 StageUI.Inst.Explain.text = explains[4];
+                GameOver.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
                 break;
         }
     }
