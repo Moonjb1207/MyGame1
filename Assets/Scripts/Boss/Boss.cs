@@ -16,6 +16,7 @@ public class Boss : Enemy
             case STATE.Create:
                 break;
             case STATE.Normal:
+                StageUI.Inst.Boss.value = myStat.CurHP / myStat.MaxHP;
                 Appear();
                 break;
             case STATE.Battle:
@@ -28,6 +29,7 @@ public class Boss : Enemy
             case STATE.Dead:
                 StageSystem.Inst.spawnEnemy--;
                 StageSystem.Inst.clearEnemy++;
+                StageSystem.Inst.Score += 100;
 
                 StopAllCoroutines();
 

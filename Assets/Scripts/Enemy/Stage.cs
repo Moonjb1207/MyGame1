@@ -21,8 +21,11 @@ public class Stage : Enemy, IBattle
                     FollowTarget(mySensor.myTarget.transform, myStat.MoveSpeed, myStat.RotSpeed, attackRange, Attacking);
                 break;
             case STATE.Dead:
+                ItemManager.Inst.DropPotion(transform.position);
+
                 StageSystem.Inst.spawnEnemy--;
                 StageSystem.Inst.clearEnemy++;
+                StageSystem.Inst.Score += 10;
 
                 StopAllCoroutines();
 
@@ -86,7 +89,7 @@ public class Stage : Enemy, IBattle
     // Start is called before the first frame update
     protected override void Start()
     {
-
+        base.Start();
     }
 
     // Update is called once per frame

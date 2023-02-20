@@ -8,6 +8,11 @@ public class PlayerController : MonoBehaviour
 
     public Player[] players = new Player[2];
     [SerializeField] int curIndex;
+    public int CurIndex
+    {
+        get => curIndex;
+    }
+
     public SpringArm myCam;
     public GameObject myEar;
     public GameObject Pause;
@@ -21,6 +26,13 @@ public class PlayerController : MonoBehaviour
     int pressedButton = -1;
     bool IsRightCombo = false;
     string comboName = "";
+
+    bool mouseVisible = false;
+    bool getItem = false;
+    public bool GetItem
+    {
+        get => getItem;
+    }
 
     List<List<int>> combolAttackList = new List<List<int>>();
     List<List<int>> combohAttackList = new List<List<int>>();
@@ -270,6 +282,62 @@ public class PlayerController : MonoBehaviour
             Pause.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+        }
+
+        //Use Potion
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SkillIcon myIcon = gameObject.GetComponent<Inventory>().mySlot[0].GetComponentInChildren<SkillIcon>();
+
+            if (myIcon != null)
+            {
+                myIcon.OnAction();
+                gameObject.GetComponent<Inventory>().use(0);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SkillIcon myIcon = gameObject.GetComponent<Inventory>().mySlot[1].GetComponentInChildren<SkillIcon>();
+
+            if (myIcon != null)
+            {
+                myIcon.OnAction();
+                gameObject.GetComponent<Inventory>().use(1);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SkillIcon myIcon = gameObject.GetComponent<Inventory>().mySlot[2].GetComponentInChildren<SkillIcon>();
+
+            if (myIcon != null)
+            {
+                myIcon.OnAction();
+                gameObject.GetComponent<Inventory>().use(2);
+            }
+        }
+
+        //∏∂øÏΩ∫ µÓ¿Â
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            mouseVisible = !mouseVisible;
+            if (mouseVisible)
+            {
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.visible = false;
+            }
+        }
+
+        //æ∆¿Ã≈€ »πµÊ
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            getItem = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            getItem = false;
         }
     }
 }

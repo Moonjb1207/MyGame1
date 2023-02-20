@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stage1
   m_EditorClassIdentifier: 
   enemy:
-    maxHP: 100
+    maxHP: 10
     moveSpeed: 3
     attackDelay: 5
   boss:
@@ -21,7 +21,8 @@ MonoBehaviour:
     moveSpeed: 4
     attackDelay: 3
     bossName: stage1
-  stageTime: 5
+    myIMG: {fileID: 21300000, guid: 538a464076097e94cb5e09e565e17859, type: 3}
+  stageTime: 60
   bossTime: 60
   enemyCount: 10
   stageLevel: 1

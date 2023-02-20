@@ -18,7 +18,8 @@ public class StageSystem : MonoBehaviour
     public GameObject GameOver;
 
     public List<Enemy> spawnEnemies = new List<Enemy>();
-    
+
+    public int Score = 0;
     public StageState myState = StageState.Menu;
     public int stage;
     float stageTime;
@@ -54,6 +55,7 @@ public class StageSystem : MonoBehaviour
                 stageTime = stageList[stage].BossTime;
                 StageUI.Inst.Time.value = stageTime / stageList[stage].BossTime;
                 StageUI.Inst.Explain.text = explains[2];
+                StageUI.Inst.BossIMG.sprite = stageList[stage].Boss.myIMG;
                 clearEnemy = 0;
                 break;
             case StageState.Clear:

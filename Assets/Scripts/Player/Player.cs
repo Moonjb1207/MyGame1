@@ -72,6 +72,18 @@ public class Player : CharacterMovement, IBattle
         }
     }
 
+    public void getPotion(float f)
+    {
+        myStat.CurHP += f;
+        
+        if (myStat.CurHP > myStat.MaxHP)
+        {
+            myStat.CurHP = myStat.MaxHP;
+        }
+
+        StageUI.Inst.Player.value = myStat.CurHP / myStat.MaxHP;
+    }
+
     void playEffect(int i)
     {
         GameObject obj = Instantiate(OnDamagedEf[i]);

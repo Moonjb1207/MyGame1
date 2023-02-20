@@ -33,7 +33,10 @@ public class Enemy : CharacterMovement, IBattle
 
     protected virtual void ChangeState(STATE ms)
     {
-        
+        if (ms == STATE.Normal)
+        {
+            myStat.IsdmgDelay = false;
+        }
     }
 
     protected virtual void StateProcess()
@@ -148,7 +151,7 @@ public class Enemy : CharacterMovement, IBattle
     // Start is called before the first frame update
     protected virtual void Start()
     {
-
+        myStat.IsdmgDelay = true;
     }
 
     // Update is called once per frame

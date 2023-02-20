@@ -25,13 +25,15 @@ public struct StageBoss
     public float moveSpeed;
     public float attackDelay;
     public string bossName;
+    public Sprite myIMG;
 
-    public StageBoss(float mh, float ms, float ad, string bn)
+    public StageBoss(float mh, float ms, float ad, string bn, Sprite myimg)
     {
         maxHP = mh;
         moveSpeed = ms;
         attackDelay = ad;
         bossName = bn;
+        myIMG = myimg;
     }
 }
 

@@ -18,7 +18,7 @@ public class Stage1Boss : Boss
     // Start is called before the first frame update
     protected override void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -39,7 +39,7 @@ public class Stage1Boss : Boss
             if (curDelay >= myStat.AttackDelay)
             {
                 int rnd = Random.Range(0, 3);
-                PatternAttack(rnd);
+                PatternAttack(2);
 
                 IsAttacking = !IsAttacking;
             }
@@ -114,7 +114,7 @@ public class Stage1Boss : Boss
         myRigid.useGravity = false;
 
         myAnim.SetBool("IsFRunning", true);
-        GameObject temp = playEffect(PatEf[0], Vector3.zero, transform);
+        GameObject temp = playEffect(PatEf[0], new Vector3(0.0f, 1.0f, 0.0f), transform);
 
         while (dist < linerAttackMax)
         {
@@ -160,12 +160,12 @@ public class Stage1Boss : Boss
     {
         Transform Target = mySensor.myTarget.transform;
         Vector3 dir = Target.position - transform.position;
-        float dist = dir.magnitude / 2;
+        float dist = 2 * dir.magnitude / 3;
 
         StarePlayerOnce(Target, myStat.RotSpeed * 2);
 
         myAnim.SetBool("JmpAtk", true);
-        myRigid.AddForce(transform.up * dist * 2.0f, ForceMode.Impulse);
+        myRigid.AddForce(transform.up * dist * 1.7f, ForceMode.Impulse);
         myAnim.SetTrigger("Jump");
 
         while(dist > 0)
@@ -180,7 +180,7 @@ public class Stage1Boss : Boss
 
             transform.Translate(transform.forward * delta, Space.World);
 
-            if (Physics.Raycast(transform.position, Vector3.down, 1.0f, myGround) && myAnim.GetBool("IsAir"))
+            if (Physics.Raycast(transform.position, Vector3.down, 2.0f, myGround) && myAnim.GetBool("IsAir"))
             {
                 myAnim.SetBool("IsAir", false);
                 myAnim.SetTrigger("AtkLanding");
@@ -191,7 +191,7 @@ public class Stage1Boss : Boss
 
         playEffect(PatEf[1], Vector3.zero, transform);
 
-        Collider[] list = Physics.OverlapSphere(myHitPos.position, 5.0f, mySensor.myEnemy);
+        Collider[] list = Physics.OverlapSphere(myHitPos.position, 7.0f, mySensor.myEnemy);
 
         foreach (Collider col in list)
         {
@@ -212,7 +212,7 @@ public class Stage1Boss : Boss
 
         Vector3 pos = transform.position + new Vector3(0.0f, 5.0f, 0.0f);
 
-        playEffect(PatEf[2], pos);
+        playEffect(PatEf[2], transform.up * 5.0f, transform);
 
         myAnim.SetTrigger("RndAtk");
 

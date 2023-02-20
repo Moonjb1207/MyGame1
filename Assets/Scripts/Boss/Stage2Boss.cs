@@ -21,11 +21,6 @@ public class Stage2Boss : Boss
 
     protected override void ChangeState(STATE ms)
     {
-        if (ms == STATE.Normal)
-        {
-            LightManager.Inst.LightOnOff();
-        }
-
         base.ChangeState(ms);
     }
 

@@ -24,7 +24,7 @@ public class LightManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RenderSettings.skybox = skyboxDay;
+
     }
 
     // Update is called once per frame

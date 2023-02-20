@@ -75,6 +75,6 @@ public class StageUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Score.text = StageSystem.Inst.Score.ToString();
     }
 }
