@@ -250,11 +250,11 @@ public class PlayerController : MonoBehaviour
         }
 
         //Check Air
-        if (Physics.Raycast(transform.position, Vector3.down, 0.1f, myGround) && myAnim.GetBool("IsAir"))
-        {
-            myAnim.SetBool("IsAir", false);
-            myAnim.SetTrigger("Landing");
-        }
+        //if (Physics.Raycast(transform.position, Vector3.down, 0.1f, myGround) && myAnim.GetBool("IsAir"))
+        //{
+        //    myAnim.SetBool("IsAir", false);
+        //    myAnim.SetTrigger("Landing");
+        //}
 
         //JumpAttack
         if (myAnim.GetBool("IsJumping") && players[curIndex].IsComboable)
