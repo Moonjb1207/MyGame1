@@ -7,6 +7,9 @@ public class SpearAttack : MonoBehaviour
     float spearSpeed = 45.0f;
     Collider myCol = null;
 
+    public AudioClip moving;
+    public AudioClip ready;
+
     public LayerMask myEnemy = default;
     public IBattle myTargetB = null;
 

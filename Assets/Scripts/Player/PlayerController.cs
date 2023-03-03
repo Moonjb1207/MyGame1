@@ -6,6 +6,28 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Inst = null;
 
+    public class KeyOption
+    {
+        public KeyCode moveForward;
+        public KeyCode moveBack;
+        public KeyCode moveLeft;
+        public KeyCode moveRight;
+        public KeyCode Run;
+        public KeyCode Jump;
+
+        public void SettingKeys(Dictionary <KeyAction, KeyCode> keys)
+        {
+            moveForward = keys[KeyAction.Foward];
+            moveBack = keys[KeyAction.Backward];
+            moveLeft = keys[KeyAction.Left];
+            moveRight = keys[KeyAction.Right];
+            Run = keys[KeyAction.Run];
+            Jump = keys[KeyAction.Jump];
+        }
+    }
+
+    KeyOption myKeys;
+
     public Player[] players = new Player[2];
     [SerializeField] int curIndex;
     public int CurIndex
@@ -67,6 +89,8 @@ public class PlayerController : MonoBehaviour
         DownPower = players[curIndex].DownPower;
 
         StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
+
+        myKeys.SettingKeys(SettingManager.Inst.KeyPairs);
     }
 
     // Start is called before the first frame update
@@ -126,12 +150,12 @@ public class PlayerController : MonoBehaviour
         //Moving
         if (!myAnim.GetBool("IsAttacking"))
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKeyDown(myKeys.Run))
             {
                 IsRunning = true;
             }
 
-            if (Input.GetKeyUp(KeyCode.LeftShift))
+            if (Input.GetKeyUp(myKeys.Run))
             {
                 IsRunning = false;
             }
@@ -242,7 +266,7 @@ public class PlayerController : MonoBehaviour
         //Jump
         if (!myAnim.GetBool("IsAir") && !myAnim.GetBool("IsAttacking"))
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(myKeys.Jump))
             {
                 myAnim.SetTrigger("Jump");
                 myRigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);

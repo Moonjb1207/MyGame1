@@ -14,6 +14,9 @@ public class Stage1Boss : Boss
     GameObject[] spears = new GameObject[10];
 
     public GameObject[] PatEf = new GameObject[3];
+    public AudioClip[] Attacksd = new AudioClip[3];
+
+    GameObject efSound;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -115,6 +118,7 @@ public class Stage1Boss : Boss
 
         myAnim.SetBool("IsFRunning", true);
         GameObject temp = playEffect(PatEf[0], new Vector3(0.0f, 1.0f, 0.0f), transform);
+        EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(spinePos.position), Attacksd[0]);
 
         while (dist < linerAttackMax)
         {
@@ -190,6 +194,7 @@ public class Stage1Boss : Boss
         }
 
         playEffect(PatEf[1], Vector3.zero, transform);
+        EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(spinePos.position), Attacksd[1]);
 
         Collider[] list = Physics.OverlapSphere(myHitPos.position, 7.0f, mySensor.myEnemy);
 
@@ -212,6 +217,7 @@ public class Stage1Boss : Boss
 
         Vector3 pos = transform.position + new Vector3(0.0f, 5.0f, 0.0f);
 
+        EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(pos), Attacksd[2]);
         playEffect(PatEf[2], transform.up * 5.0f, transform);
 
         myAnim.SetTrigger("RndAtk");
@@ -220,6 +226,9 @@ public class Stage1Boss : Boss
         {
             spears[i] = CreateSpear(pos);
         }
+
+        efSound = EffectSoundManager.Inst.CreateEffectSound(pos);
+        EffectSoundManager.Inst.PlayEfSound(efSound, spears[0].GetComponent<SpearAttack>().ready);
 
         StartCoroutine(PatWait());
     }
@@ -252,6 +261,7 @@ public class Stage1Boss : Boss
         }
 
         yield return new WaitForSeconds(1.0f);
+        efSound.GetComponent<AudioSource>().Stop();
 
         IsAttacking = !IsAttacking;
     }
