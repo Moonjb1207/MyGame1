@@ -19,6 +19,8 @@ public class SettingManager : MonoBehaviour
     public float EFSound;
     public static SettingManager Inst = null;
 
+    [SerializeField] string path = "";
+
     KeyCode[] defaultKeys = new KeyCode[]
     {
         KeyCode.X, KeyCode.P, KeyCode.Z, KeyCode.LeftAlt, KeyCode.LeftShift, KeyCode.Space
@@ -31,7 +33,7 @@ public class SettingManager : MonoBehaviour
         if (Inst == null)
             Inst = this;
 
-        string path = Application.dataPath + @"SettingData.data";
+        path = Application.dataPath + @"gameSettingData.data";
 
         if (!File.Exists(path))
         {
@@ -78,6 +80,8 @@ public class SettingManager : MonoBehaviour
 
     public void SettingSave(string path)
     {
+        mySettingDatas.keys.Clear();
+
         for (int i = 0; i < (int)KeyAction.KeyCount; i++)
         {
             mySettingDatas.keys.Add(KeyPairs[(KeyAction)i]);

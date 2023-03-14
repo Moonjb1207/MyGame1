@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Stage : Enemy, IBattle
 {
+    Vector3 itemDrop = Vector3.zero;
+
     protected override void ChangeState(STATE ms)
     {
         if (myState == ms) return;
@@ -21,7 +23,9 @@ public class Stage : Enemy, IBattle
                     FollowTarget(mySensor.myTarget.transform, myStat.MoveSpeed, myStat.RotSpeed, attackRange, Attacking);
                 break;
             case STATE.Dead:
-                ItemManager.Inst.DropPotion(transform.position);
+                itemDrop = transform.position;
+                itemDrop.y = 0.7f;
+                ItemManager.Inst.DropPotion(itemDrop);
 
                 StageSystem.Inst.spawnEnemy--;
                 StageSystem.Inst.clearEnemy++;

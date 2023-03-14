@@ -36,7 +36,7 @@ public class SoundSettingManager : MonoBehaviour
 
         BGSoundManager.Inst.myBG.volume = SettingManager.Inst.BGSound;
 
-        SettingManager.Inst.SettingSave(Application.dataPath + @"SettingData.data");
+        SettingManager.Inst.SettingSave(Application.dataPath + @"gameSettingData.data");
     }
 
     public void ChangeSound(int num)

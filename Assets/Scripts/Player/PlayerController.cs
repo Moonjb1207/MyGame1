@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Inst = null;
 
+    [Serializable]
     public class KeyOption
     {
         public KeyCode charcChange;
@@ -26,7 +28,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    KeyOption myKeys;
+    [SerializeField] KeyOption myKeys = new KeyOption();
 
     public Player[] players = new Player[2];
     [SerializeField] int curIndex;
@@ -359,7 +361,7 @@ public class PlayerController : MonoBehaviour
         {
             getItem = true;
         }
-        if (Input.GetKeyUp(KeyCode.Z))
+        if (Input.GetKeyUp(myKeys.getItem))
         {
             getItem = false;
         }
