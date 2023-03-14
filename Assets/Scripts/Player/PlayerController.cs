@@ -8,19 +8,19 @@ public class PlayerController : MonoBehaviour
 
     public class KeyOption
     {
-        public KeyCode moveForward;
-        public KeyCode moveBack;
-        public KeyCode moveLeft;
-        public KeyCode moveRight;
+        public KeyCode charcChange;
+        public KeyCode Pause;
+        public KeyCode getItem;
+        public KeyCode useMouse;
         public KeyCode Run;
         public KeyCode Jump;
 
         public void SettingKeys(Dictionary <KeyAction, KeyCode> keys)
         {
-            moveForward = keys[KeyAction.Foward];
-            moveBack = keys[KeyAction.Backward];
-            moveLeft = keys[KeyAction.Left];
-            moveRight = keys[KeyAction.Right];
+            charcChange = keys[KeyAction.Change];
+            Pause = keys[KeyAction.Pause];
+            getItem = keys[KeyAction.Get];
+            useMouse = keys[KeyAction.Mouse];
             Run = keys[KeyAction.Run];
             Jump = keys[KeyAction.Jump];
         }
@@ -293,14 +293,14 @@ public class PlayerController : MonoBehaviour
         //Change Char
         if (!myAnim.GetBool("IsJumping") && !myAnim.GetBool("IsAttacking"))
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(myKeys.charcChange))
             {
                 ChangeCharc();
             }
         }
 
         //Pause
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(myKeys.Pause))
         {
             Time.timeScale = 0.0f;
             Pause.SetActive(true);
@@ -341,7 +341,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //∏∂øÏΩ∫ µÓ¿Â
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(myKeys.useMouse))
         {
             mouseVisible = !mouseVisible;
             if (mouseVisible)
@@ -355,7 +355,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //æ∆¿Ã≈€ »πµÊ
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(myKeys.getItem))
         {
             getItem = true;
         }

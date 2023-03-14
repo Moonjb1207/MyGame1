@@ -7,7 +7,7 @@ using System;
 [Serializable]
 public enum KeyAction
 {
-    Foward, Backward, Left, Right, Run, Jump, KeyCount,
+    Change, Pause, Get, Mouse, Run, Jump, KeyCount,
 }
 
 public class SettingManager : MonoBehaviour
@@ -21,7 +21,7 @@ public class SettingManager : MonoBehaviour
 
     KeyCode[] defaultKeys = new KeyCode[]
     {
-        KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D, KeyCode.LeftShift, KeyCode.Space
+        KeyCode.X, KeyCode.P, KeyCode.Z, KeyCode.LeftAlt, KeyCode.LeftShift, KeyCode.Space
     };
 
     float defaultSound = 1.0f;

@@ -31630,6 +31630,7 @@ MonoBehaviour:
   - Clear
   - Game Over
   GameOver: {fileID: 469901016}
+  noneBoss: {fileID: 21300000, guid: 215552414154c7446bd632d5d1206b32, type: 3}
   spawnEnemies: []
   Score: 0
   myState: 0

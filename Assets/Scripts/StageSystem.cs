@@ -16,6 +16,7 @@ public class StageSystem : MonoBehaviour
     public StageData[] stageList;
     public string[] explains;
     public GameObject GameOver;
+    public Sprite noneBoss;
 
     public List<Enemy> spawnEnemies = new List<Enemy>();
 
@@ -41,6 +42,7 @@ public class StageSystem : MonoBehaviour
                 StageUI.Inst.Time.value = restTime / startTime;
                 StageUI.Inst.Stage.text = "Stage " + stage + 1;
                 StageUI.Inst.Explain.text = explains[0];
+                StageUI.Inst.BossIMG.sprite = noneBoss;
                 break;
             case StageState.Enemy:
                 StartCoroutine(Spawning());
