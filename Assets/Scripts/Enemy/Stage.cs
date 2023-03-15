@@ -83,8 +83,9 @@ public class Stage : Enemy, IBattle
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         ChangeState(STATE.Normal);
         myStat.IsBoss = false;
     }

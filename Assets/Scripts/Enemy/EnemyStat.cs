@@ -96,7 +96,7 @@ public class EnemyStat : MonoBehaviour
             attackDelay = myData[StageSystem.Inst.stage].Boss.attackDelay;
         }
         rotSpeed = 700.0f;
-        damagedDelay = 0.0f;
-        isdmgDelay = false;
+        damagedDelay = 1.0f;
+        isdmgDelay = true;
     }
 }

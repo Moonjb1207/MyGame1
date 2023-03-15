@@ -8,6 +8,7 @@ public class Potions : MonoBehaviour
     public LayerMask myPlayer;
     public int type;
     float potionSpeed = 20.0f;
+    bool eat = false;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +70,7 @@ public class Potions : MonoBehaviour
 
     public void GetPotion(GameObject player)
     {
+        eat = true;
         StartCoroutine(GettingPotion(player));
     }
 
@@ -97,15 +99,15 @@ public class Potions : MonoBehaviour
             yield return null;
         }
 
-        player.GetComponentInParent<Inventory>().get(type);
         Destroy(gameObject);
+        player.GetComponentInParent<Inventory>().get(type);
     }
 
     private void OnTriggerStay(Collider other)
     {
         if ((myPlayer & 1 << other.gameObject.layer) != 0)
         {
-            if (PlayerController.Inst.GetItem)
+            if (PlayerController.Inst.GetItem && !eat)
             {
                 GetPotion(other.gameObject);
             }

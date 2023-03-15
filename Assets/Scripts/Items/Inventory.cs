@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     public int[,] inven = new int[3, 2];
 
     public SkillSlot[] mySlot = new SkillSlot[3];
+    public TMPro.TMP_Text[] count = new TMPro.TMP_Text[3];
 
     // Start is called before the first frame update
     void Start()
@@ -34,15 +35,18 @@ public class Inventory : MonoBehaviour
 
         inven[i, 0] = -1;
         inven[i, 1] = 0;
+        count[i].text = "";
     }
 
     public void use(int num)
     {
         inven[num, 1]--;
+        count[num].text = inven[num, 1].ToString();
         if (inven[num, 1] == 0)
         {
             mySlot[num].GetComponentInChildren<SkillIcon>().countZero();
             inven[num, 0] = -1;
+            count[num].text = "";
         }
     }
 
@@ -65,12 +69,14 @@ public class Inventory : MonoBehaviour
             if (inven[i, 0] == -1)
             {
                 inven[i, 0] = type;
-                inven[i, 1]++;
 
                 GameObject obj = Instantiate(Resources.Load("Prefabs/Potions/Potion" + type + "Icon") as GameObject);
                 obj.GetComponent<SkillIcon>().SetParent(mySlot[i]);
                 obj.GetComponent<SkillIcon>().type = type;
                 obj.GetComponent<SkillIcon>().seat = i;
+
+                inven[i, 1]++;
+                count[i].text = inven[i, 1].ToString();
 
                 break;
             }
@@ -79,9 +85,11 @@ public class Inventory : MonoBehaviour
                 if (inven[i, 0] == type)
                 {
                     inven[i, 1]++;
+                    count[i].text = inven[i, 1].ToString();
                     if (inven[i, 1] > 9)
                     {
                         inven[i, 1] = 9;
+                        count[i].text = inven[i, 1].ToString();
                         continue;
                     }
                     else
