@@ -22,7 +22,7 @@ MonoBehaviour:
     attackDelay: 3
     bossName: stage1
     myIMG: {fileID: 21300000, guid: 538a464076097e94cb5e09e565e17859, type: 3}
-  stageTime: 10
+  stageTime: 60
   bossTime: 60
   enemyCount: 10
   stageLevel: 1

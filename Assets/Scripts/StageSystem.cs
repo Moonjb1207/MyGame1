@@ -16,6 +16,11 @@ public class StageSystem : MonoBehaviour
     public StageData[] stageList;
     public string[] explains;
     public GameObject GameOver;
+    public GameObject Clear;
+    public GameObject Stagenum;
+
+    public TMPro.TMP_Text stageNum;
+
     public Sprite noneBoss;
 
     public List<Enemy> spawnEnemies = new List<Enemy>();
@@ -43,12 +48,17 @@ public class StageSystem : MonoBehaviour
                 StageUI.Inst.Stage.text = "Stage " + stage + 1;
                 StageUI.Inst.Explain.text = explains[0];
                 StageUI.Inst.BossIMG.sprite = noneBoss;
+                Stagenum.SetActive(true);
+                stageNum.text = "Stage " + stage + 1;
+                fadeAway(Stagenum.GetComponentInChildren<Image>());
+                fadeAway(stageNum);
                 break;
             case StageState.Enemy:
                 StartCoroutine(Spawning());
                 stageTime = stageList[stage].StageTime;
                 StageUI.Inst.Time.value = stageTime / stageList[stage].StageTime;
                 StageUI.Inst.Explain.text = explains[1];
+                Stagenum.SetActive(false);
                 clearEnemy = 0;
                 break;
             case StageState.Boss:
@@ -71,6 +81,7 @@ public class StageSystem : MonoBehaviour
                 GameOver.SetActive(true);
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0.0f;
                 break;
         }
     }
@@ -99,6 +110,7 @@ public class StageSystem : MonoBehaviour
             case StageState.Boss:
                 stageTime -= Time.deltaTime;
                 StageUI.Inst.Time.value = stageTime / stageList[stage].BossTime;
+                StageUI.Inst.Boss.value = 1.0f;
                 if (stageTime <= 0.0f)
                 {
                     if (clearEnemy == 1)
@@ -112,11 +124,21 @@ public class StageSystem : MonoBehaviour
                 }
                 break;
             case StageState.Clear:
+                Clear.SetActive(true);
+                fadeAway(Clear.GetComponentInChildren<Image>());
+                fadeAway(Clear.GetComponentInChildren<TMPro.TMP_Text>());
                 restTime -= Time.deltaTime;
                 StageUI.Inst.Time.value = restTime / clearTime;
+
+                stage++;
+                StageSaveData data = SaveManager.Inst.LoadFile<StageSaveData>(Application.dataPath + @"\Stage.data");
+                data.isUnlock[stage] = true;
+                SaveManager.Inst.SaveFile<StageSaveData>(Application.dataPath + @"\Stage.data", data);
+
                 if (restTime <= 0.0f)
                 {
                     ChangeState(StageState.Start);
+                    Clear.SetActive(false);
                 }
                 break;
             case StageState.GameOver:
@@ -129,8 +151,7 @@ public class StageSystem : MonoBehaviour
         Inst = this;
 
         //for test
-        //stage = LoadManager.Inst.selectStage;
-        stage = 0;
+        stage = LoadManager.Inst.selectStage;
     }
 
     // Start is called before the first frame update
@@ -187,7 +208,37 @@ public class StageSystem : MonoBehaviour
                 spawnEnemies[i].timetoRun();
         }
     }
-    
+
+    void fadeAway(Image x)
+    {
+        StartCoroutine(Fade(x));
+    }
+
+    IEnumerator Fade(Image x)
+    {
+        while (x.color.a > 0.0f)
+        {
+            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime);
+
+            yield return null;
+        }
+    }
+
+    void fadeAway(TMPro.TMP_Text x)
+    {
+        StartCoroutine(Fade(x));
+    }
+
+    IEnumerator Fade(TMPro.TMP_Text x)
+    {
+        while (x.color.a > 0.0f)
+        {
+            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime);
+
+            yield return null;
+        }
+    }
+
     public void PlayerDead()
     {
         ChangeState(StageState.GameOver);

@@ -8,14 +8,13 @@ public class SwordPlayer : Player
 
     private void Awake()
     {
-
         myState = STATE.Create;
+        myStat.CurHP = myStat.MaxHP = 100.0f;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        myStat.MaxHP = myStat.CurHP = 100.0f;
         myStat.MoveSpeed = 5.0f;
         myStat.RotSpeed = 700.0f;
         myStat.AttackDelay = 5.0f;

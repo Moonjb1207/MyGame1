@@ -91,6 +91,7 @@ public class PauseMenu : MonoBehaviour
         PlayerController.Inst.Pause.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+        PlayerController.Inst.myCam.IsLive = true;
     }
 
     public void SettingBackButton()

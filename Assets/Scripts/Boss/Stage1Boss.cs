@@ -42,7 +42,7 @@ public class Stage1Boss : Boss
             if (curDelay >= myStat.AttackDelay)
             {
                 int rnd = Random.Range(0, 3);
-                PatternAttack(2);
+                PatternAttack(rnd);
 
                 IsAttacking = !IsAttacking;
             }

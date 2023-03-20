@@ -61,7 +61,6 @@ public class Player : CharacterMovement, IBattle
         playEffect(i);
         EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(SpinePos.position), DamagedSound);
 
-
         if (myStat.CurHP <= 0.0f)
         {
             ChangeState(STATE.Dead);
@@ -116,8 +115,6 @@ public class Player : CharacterMovement, IBattle
             case STATE.Dead:
                 StopAllCoroutines();
                 myAnim.SetTrigger("Dead");
-                myAnim.enabled = false;
-                StageSystem.Inst.PlayerDead();
                 break;
         }
     }
@@ -306,7 +303,10 @@ public class Player : CharacterMovement, IBattle
     
     IEnumerator Dead()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
+
+        StageSystem.Inst.PlayerDead();
+        PlayerController.Inst.myCam.IsLive = false;
     }
 
     public void InCharc()

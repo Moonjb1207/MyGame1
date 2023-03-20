@@ -64,6 +64,6 @@ public class AnimEvent : MonoBehaviour
 
     public void PlayingEfSound_1()
     {
-
+        PlayEfSound_1?.Invoke();
     }
 }

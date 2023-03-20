@@ -30,8 +30,8 @@ public class SkillSlot : MonoBehaviour, IDropHandler
             child.SetParent(icon.myParent);
         }
 
-        icon?.SetParent(this);
-
         PlayerController.Inst.gameObject.GetComponent<Inventory>().changeSlot(num, icon.seat);
+
+        icon?.SetParent(this);
     }
 }

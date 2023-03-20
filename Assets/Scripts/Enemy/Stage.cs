@@ -63,8 +63,7 @@ public class Stage : Enemy, IBattle
             case STATE.Battle:
                 if (mySensor.myTarget != null && !mySensor.myTargetB.IsLive)
                 {
-                    mySensor.LostTarget();
-                    ChangeState(STATE.Normal);
+                    StopAllCoroutines();
                 }
 
                 if (!myAnim.GetBool("IsAttacking"))

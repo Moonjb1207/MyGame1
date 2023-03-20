@@ -138,12 +138,13 @@ public class PlayerController : MonoBehaviour
         myEar.transform.SetParent(players[curIndex].myListener.transform);
 
         players[curIndex].InCharc();
-        ChangeCharcIMG();
+        ChangeCharcUI();
     }
 
-    void ChangeCharcIMG()
+    void ChangeCharcUI()
     {
         StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
+        StageUI.Inst.Player.value = players[curIndex].myStat.CurHP / players[curIndex].myStat.MaxHP;
     }
 
     
@@ -306,6 +307,7 @@ public class PlayerController : MonoBehaviour
         {
             Time.timeScale = 0.0f;
             Pause.SetActive(true);
+            myCam.IsLive = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }

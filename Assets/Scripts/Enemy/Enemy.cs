@@ -113,6 +113,10 @@ public class Enemy : CharacterMovement, IBattle
         {
             myStat.CurHP -= dmg;
             playEffect(i);
+            if (myStat.IsBoss)
+            {
+                StageUI.Inst.Boss.value = myStat.CurHP / myStat.MaxHP;
+            }
 
             EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(SpinePos.position), DamagedSound);
 

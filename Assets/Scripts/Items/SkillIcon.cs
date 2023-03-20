@@ -13,7 +13,6 @@ public class SkillIcon : UIProperty, IPointerClickHandler, IBeginDragHandler, ID
     public ItemData myPotions;
 
     public SkillSlot myParent = null;
-    public Rect Inven;
 
     public int seat;
 
@@ -50,10 +49,11 @@ public class SkillIcon : UIProperty, IPointerClickHandler, IBeginDragHandler, ID
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (Inven.position.x + Inven.xMin > eventData.position.x ||
-            Inven.position.x + Inven.yMax < eventData.position.x ||
-            Inven.position.y + Inven.yMin > eventData.position.y ||
-            Inven.position.y + Inven.yMax < eventData.position.y)
+        //if (Inven.position.x + Inven.xMin > eventData.position.x ||
+        //    Inven.position.x + Inven.yMax < eventData.position.x ||
+        //    Inven.position.y + Inven.yMin > eventData.position.y ||
+        //    Inven.position.y + Inven.yMax < eventData.position.y)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
             PlayerController.Inst.gameObject.GetComponent<Inventory>().throwPotion(seat, type);
             Destroy(gameObject);
@@ -75,6 +75,7 @@ public class SkillIcon : UIProperty, IPointerClickHandler, IBeginDragHandler, ID
         myParent = slot;
         transform.SetParent(myParent.myIconSlot);
         myRT.anchoredPosition = Vector2.zero;
+        seat = slot.num;
     }
 
     public void UsePotion()

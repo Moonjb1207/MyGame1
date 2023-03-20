@@ -20,6 +20,8 @@ public class StageUI : MonoBehaviour
     [SerializeField] Image lattackDelay;
     [SerializeField] Image hattack;
     [SerializeField] Image hattackDelay;
+    [SerializeField] RectTransform pfill;
+    [SerializeField] RectTransform bfill;
 
     public Slider Player
     {
@@ -69,7 +71,8 @@ public class StageUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Player.fillRect = pfill;
+        Boss.fillRect = bfill;
     }
 
     // Update is called once per frame

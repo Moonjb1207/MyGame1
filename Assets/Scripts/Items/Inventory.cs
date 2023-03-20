@@ -57,9 +57,15 @@ public class Inventory : MonoBehaviour
 
         inven[pre, 0] = inven[cur, 0];
         inven[pre, 1] = inven[cur, 1];
+        count[pre].text = inven[pre, 1].ToString();
+        if (inven[pre, 1] == 0)
+            count[pre].text = "";
 
-        inven[cur, 0] = inven[pre, 0];
-        inven[cur, 1] = inven[pre, 1];
+        inven[cur, 0] = temp1;
+        inven[cur, 1] = temp2;
+        count[cur].text = inven[cur, 1].ToString();
+        if (inven[cur, 1] == 0)
+            count[cur].text = "";
     }
 
     public void get(int type)

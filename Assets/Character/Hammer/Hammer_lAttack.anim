@@ -39685,21 +39685,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.584058
+  - time: 0.6
     functionName: OnComboCheckStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6
+  - time: 0.6333333
     functionName: OnlAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6333333
+  - time: 0.6666667
     functionName: PlayingEfSound_1
     data: 
     objectReferenceParameter: {fileID: 0}

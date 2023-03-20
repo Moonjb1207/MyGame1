@@ -75,7 +75,7 @@ public class Boss : Enemy
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         ChangeState(STATE.Normal);
         myStat.IsBoss = true;
