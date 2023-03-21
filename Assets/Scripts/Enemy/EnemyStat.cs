@@ -79,7 +79,8 @@ public class EnemyStat : MonoBehaviour
             isdmgDelay = value;
         }
     }
-    void Start()
+
+    private void Awake()
     {
         if (!IsBoss)
         {
@@ -98,5 +99,10 @@ public class EnemyStat : MonoBehaviour
         rotSpeed = 700.0f;
         damagedDelay = 1.0f;
         isdmgDelay = true;
+    }
+
+    void Start()
+    {
+
     }
 }

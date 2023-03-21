@@ -46,6 +46,13 @@ public class Stage1Boss : Boss
 
                 IsAttacking = !IsAttacking;
             }
+
+            if (Physics.Raycast(transform.position, Vector3.down, 0.3f, myGround) &&
+                myAnim.GetBool("IsAir") && !myAnim.GetBool("JmpAtk"))
+            {
+                myAnim.SetBool("IsAir", false);
+                myAnim.SetTrigger("Landing");
+            }
         }
 
         base.StateProcess();

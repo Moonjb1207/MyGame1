@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Awake()
+    {
+        if (FindObjectOfType<LoadManager>() == null)
+        {
+            Instantiate(Resources.Load("Prefabs/LoadManager") as GameObject);
+        }
+    }
+
     enum MenuState
     {
         Main, Play, Help, Setting, Quit,

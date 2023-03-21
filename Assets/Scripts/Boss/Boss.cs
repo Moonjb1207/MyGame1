@@ -75,6 +75,15 @@ public class Boss : Enemy
         }
     }
 
+    public override void OnDamage(float dmg, int i)
+    {
+        base.OnDamage(dmg, i);
+        if (IsAttacking)
+        {
+            IsAttacking = !IsAttacking;
+        }
+    }
+
     protected override void Awake()
     {
         ChangeState(STATE.Normal);

@@ -12,7 +12,9 @@ public class LoadManager : MonoBehaviour
     private void Awake()
     {
         if (Inst == null)
+        {
             Inst = this;
+        }
         DontDestroyOnLoad(this);
     }
 

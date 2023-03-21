@@ -324,7 +324,7 @@ public class Player : CharacterMovement, IBattle
         IBattle ib = col.GetComponent<IBattle>();
         ib?.OnDamage(dmg, i);
         Enemy enemy = col.GetComponent<Enemy>();
-        enemy.myStat.DamagedDelay = 0.2f;
+        enemy.myStat.DamagedDelay = 0.1f;
         enemy.myStat.IsdmgDelay = true;
     }
 }

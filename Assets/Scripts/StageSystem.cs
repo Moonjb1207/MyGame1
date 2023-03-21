@@ -62,6 +62,8 @@ public class StageSystem : MonoBehaviour
                 clearEnemy = 0;
                 break;
             case StageState.Boss:
+                spawnEnemies.Clear();
+                spawnEnemy = 0;
                 StopAllCoroutines();
                 BossSpawn();
                 stageTime = stageList[stage].BossTime;
@@ -75,6 +77,11 @@ public class StageSystem : MonoBehaviour
                 StageUI.Inst.Time.value = restTime / clearTime;
                 StageUI.Inst.Explain.text = explains[3];
                 stage++;
+                
+                if (stage > 1)
+                {
+                    ChangeState(StageState.GameOver);
+                }
                 break;
             case StageState.GameOver:
                 StageUI.Inst.Explain.text = explains[4];
@@ -111,13 +118,14 @@ public class StageSystem : MonoBehaviour
                 stageTime -= Time.deltaTime;
                 StageUI.Inst.Time.value = stageTime / stageList[stage].BossTime;
                 StageUI.Inst.Boss.value = 1.0f;
-                if (stageTime <= 0.0f)
+
+                if (clearEnemy == 1)
                 {
-                    if (clearEnemy == 1)
-                    {
-                        ChangeState(StageState.Clear);
-                    }
-                    else
+                    ChangeState(StageState.Clear);
+                }
+                else
+                {
+                    if (stageTime <= 0.0f)
                     {
                         ChangeState(StageState.GameOver);
                     }
@@ -130,7 +138,6 @@ public class StageSystem : MonoBehaviour
                 restTime -= Time.deltaTime;
                 StageUI.Inst.Time.value = restTime / clearTime;
 
-                stage++;
                 StageSaveData data = SaveManager.Inst.LoadFile<StageSaveData>(Application.dataPath + @"\Stage.data");
                 data.isUnlock[stage] = true;
                 SaveManager.Inst.SaveFile<StageSaveData>(Application.dataPath + @"\Stage.data", data);
@@ -179,7 +186,7 @@ public class StageSystem : MonoBehaviour
 
             spawnEnemy++;
 
-            GameObject obj = Instantiate(Resources.Load("Prefabs/Stage/Enemy") as GameObject, 
+            GameObject obj = Instantiate(Resources.Load("Prefabs/Stage/Enemy" + stage) as GameObject, 
                 spawnPos[Random.Range(0,3)].position, spawnPos[Random.Range(0, 3)].rotation);
 
             Enemy scp = obj.GetComponent<Enemy>();
@@ -218,7 +225,7 @@ public class StageSystem : MonoBehaviour
     {
         while (x.color.a > 0.0f)
         {
-            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime);
+            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime / 2);
 
             yield return null;
         }
@@ -233,7 +240,7 @@ public class StageSystem : MonoBehaviour
     {
         while (x.color.a > 0.0f)
         {
-            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime);
+            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime / 2);
 
             yield return null;
         }

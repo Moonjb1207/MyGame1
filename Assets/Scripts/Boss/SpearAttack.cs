@@ -13,6 +13,8 @@ public class SpearAttack : MonoBehaviour
     public LayerMask myEnemy = default;
     public IBattle myTargetB = null;
 
+    float liveTime = 5.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +26,17 @@ public class SpearAttack : MonoBehaviour
                 myCol = GetComponentInChildren<Collider>();
             }
         }
+
+        if (liveTime < 0.0f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        liveTime -= Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)

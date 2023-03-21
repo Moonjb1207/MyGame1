@@ -107,7 +107,7 @@ public class Enemy : CharacterMovement, IBattle
         myRigid.AddForce(Vector3.forward * 3.0f, ForceMode.Impulse);
     }
 
-    public void OnDamage(float dmg, int i)
+    public virtual void OnDamage(float dmg, int i)
     {
         if (!myStat.IsdmgDelay)
         {

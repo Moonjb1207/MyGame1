@@ -7,7 +7,6 @@ public class PlayMenu : MonoBehaviour
 {
     [SerializeField] List<Image> StageIMG = new List<Image>();
     public int Stage = 0;
-    bool IsClear = false;
     float moveSpeed = 1000.0f;
     [SerializeField] List<Vector3> targetPos = new List<Vector3>();
     [SerializeField] Vector2 minmaxStage;

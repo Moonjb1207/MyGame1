@@ -76,8 +76,8 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMainSceneButton()
     {
+        Time.timeScale = 1.0f;
         LoadManager.Inst.ChangeScene("MainMenu");
-        Destroy(LoadManager.Inst.gameObject);
     }
 
     public void MainQuitButton()

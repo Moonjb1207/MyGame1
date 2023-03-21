@@ -19,7 +19,7 @@ MonoBehaviour:
   boss:
     maxHP: 200
     moveSpeed: 4
-    attackDelay: 3
+    attackDelay: 5
     bossName: stage1
     myIMG: {fileID: 21300000, guid: 538a464076097e94cb5e09e565e17859, type: 3}
   stageTime: 60
