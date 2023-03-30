@@ -51,6 +51,7 @@ public class EffectSoundManager : MonoBehaviour
         else
         {
             obj = efSoundQueue.Dequeue();
+            obj.transform.position = pos;
 
         }
         obj.SetActive(true);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Boss : Enemy
 {
@@ -16,7 +17,6 @@ public class Boss : Enemy
             case STATE.Create:
                 break;
             case STATE.Normal:
-                StageUI.Inst.Boss.value = myStat.CurHP / myStat.MaxHP;
                 Appear();
                 break;
             case STATE.Battle:

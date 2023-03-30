@@ -23,6 +23,8 @@ public class StageUI : MonoBehaviour
     [SerializeField] RectTransform pfill;
     [SerializeField] RectTransform bfill;
 
+    public GameObject Bossslider;
+
     public Slider Player
     {
         get => player;

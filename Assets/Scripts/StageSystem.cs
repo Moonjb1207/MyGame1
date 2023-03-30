@@ -19,6 +19,7 @@ public class StageSystem : MonoBehaviour
     public GameObject Clear;
     public GameObject Stagenum;
 
+
     public TMPro.TMP_Text stageNum;
 
     public Sprite noneBoss;
@@ -45,11 +46,13 @@ public class StageSystem : MonoBehaviour
             case StageState.Start:
                 restTime = startTime;
                 StageUI.Inst.Time.value = restTime / startTime;
-                StageUI.Inst.Stage.text = "Stage " + stage + 1;
+                StageUI.Inst.Stage.text = "Stage " + (stage + 1);
                 StageUI.Inst.Explain.text = explains[0];
                 StageUI.Inst.BossIMG.sprite = noneBoss;
+                StageUI.Inst.Boss.value = stageList[stage].Boss.maxHP / stageList[stage].Boss.maxHP;
+
                 Stagenum.SetActive(true);
-                stageNum.text = "Stage " + stage + 1;
+                stageNum.text = "Stage " + (stage + 1);
                 fadeAway(Stagenum.GetComponentInChildren<Image>());
                 fadeAway(stageNum);
                 break;
@@ -65,6 +68,7 @@ public class StageSystem : MonoBehaviour
                 spawnEnemies.Clear();
                 spawnEnemy = 0;
                 StopAllCoroutines();
+
                 BossSpawn();
                 stageTime = stageList[stage].BossTime;
                 StageUI.Inst.Time.value = stageTime / stageList[stage].BossTime;
@@ -117,7 +121,6 @@ public class StageSystem : MonoBehaviour
             case StageState.Boss:
                 stageTime -= Time.deltaTime;
                 StageUI.Inst.Time.value = stageTime / stageList[stage].BossTime;
-                StageUI.Inst.Boss.value = 1.0f;
 
                 if (clearEnemy == 1)
                 {
@@ -225,7 +228,7 @@ public class StageSystem : MonoBehaviour
     {
         while (x.color.a > 0.0f)
         {
-            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime / 2);
+            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime / 4);
 
             yield return null;
         }
@@ -240,7 +243,7 @@ public class StageSystem : MonoBehaviour
     {
         while (x.color.a > 0.0f)
         {
-            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime / 2);
+            x.color = new Color(x.color.r, x.color.g, x.color.b, x.color.a - Time.deltaTime / 4);
 
             yield return null;
         }

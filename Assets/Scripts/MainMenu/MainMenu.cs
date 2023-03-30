@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour
         {
             Instantiate(Resources.Load("Prefabs/LoadManager") as GameObject);
         }
+
+        BGSoundManager.Inst.playBG();
     }
 
     enum MenuState

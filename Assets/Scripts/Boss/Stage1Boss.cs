@@ -11,6 +11,7 @@ public class Stage1Boss : Boss
     bool endPat = true;
     bool IsTrigger = false;
     bool endWarn = false;
+    bool firstRndAtk = true;
     GameObject[] spears = new GameObject[10];
 
     public GameObject[] PatEf = new GameObject[3];
@@ -56,6 +57,19 @@ public class Stage1Boss : Boss
         }
 
         base.StateProcess();
+    }
+
+    public override void OnDamage(float dmg, int i)
+    {
+        if (IsAttacking && spears[0].activeInHierarchy)
+        {
+            for (int k = 0; k < randomAttackCount; k++)
+            {
+                spears[k].SetActive(false);
+            }
+        }
+
+        base.OnDamage(dmg, i);
     }
 
     bool EndPat()
@@ -229,9 +243,22 @@ public class Stage1Boss : Boss
 
         myAnim.SetTrigger("RndAtk");
 
-        for (int i = 0; i < randomAttackCount; i++)
+        if (firstRndAtk)
         {
-            spears[i] = CreateSpear(pos);
+            for (int i = 0; i < randomAttackCount; i++)
+            {
+                if (firstRndAtk)
+                {
+                    spears[i] = CreateSpear(pos);
+
+                    if (i == randomAttackCount - 1)
+                        firstRndAtk = false;
+                }
+            }
+        }
+        else
+        {
+            CreateSpear(pos);
         }
 
         efSound = EffectSoundManager.Inst.CreateEffectSound(pos);
@@ -242,8 +269,20 @@ public class Stage1Boss : Boss
 
     public GameObject CreateSpear(Vector3 pos)
     {
-        GameObject obj = Instantiate(Resources.Load("Prefabs/Weapons/Spear") as GameObject
-            , pos, Quaternion.identity);
+        GameObject obj = null;
+        if (firstRndAtk)
+        {
+            obj = Instantiate(Resources.Load("Prefabs/Weapons/Spear") as GameObject
+                , pos, Quaternion.identity);
+        }
+        else
+        {
+            for (int i = 0; i < randomAttackCount; i++)
+            {
+                spears[i].transform.position = pos;
+                spears[i].SetActive(true);
+            }
+        }
 
         return obj;
     }

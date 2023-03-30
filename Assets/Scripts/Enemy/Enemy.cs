@@ -122,6 +122,7 @@ public class Enemy : CharacterMovement, IBattle
 
             if (myStat.CurHP <= 0.0f)
             {
+                StopAllCoroutines();
                 ChangeState(STATE.Dead);
             }
             else

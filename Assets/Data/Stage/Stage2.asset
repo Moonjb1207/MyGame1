@@ -21,9 +21,10 @@ MonoBehaviour:
     moveSpeed: 3
     attackDelay: 1
     bossName: stage2
+    myIMG: {fileID: 0}
   stageTime: 45
   bossTime: 60
   enemyCount: 15
   stageLevel: 2
-  spawnCount: 0
-  spawnTime: 0
+  spawnCount: 7
+  spawnTime: 2

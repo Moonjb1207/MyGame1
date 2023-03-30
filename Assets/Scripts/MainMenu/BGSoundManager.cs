@@ -19,15 +19,20 @@ public class BGSoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myBG.volume = SettingManager.Inst.BGSound;
-        myBG.clip = MainBG;
-
-        myBG.Play();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void playBG()
+    {
+        myBG.volume = SettingManager.Inst.BGSound;
+        myBG.clip = MainBG;
+
+        myBG.Play();
     }
 }
