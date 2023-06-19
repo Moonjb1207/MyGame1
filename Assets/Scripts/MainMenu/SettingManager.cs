@@ -13,7 +13,9 @@ public enum KeyAction
 public class SettingManager : MonoBehaviour
 {
     public SettingData mySettingDatas = new SettingData();
+
     public Dictionary<KeyAction, KeyCode> KeyPairs = new Dictionary<KeyAction, KeyCode>();
+
     public float MSSound;
     public float BGSound;
     public float EFSound;
