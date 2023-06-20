@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class MainMenu : MonoBehaviour
 
         BGSoundManager.Inst.playBG();
     }
+
+    public TMPro.TMP_Text curText;
 
     enum MenuState
     {
