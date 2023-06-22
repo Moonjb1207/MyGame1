@@ -6,14 +6,19 @@ using UnityEngine.UI;
 public class PlayMenu : MonoBehaviour
 {
     [SerializeField] List<Image> StageIMG = new List<Image>();
+
+    public Image curStageIMG;
+    public Image Lock;
+
     public int Stage = 0;
-    float moveSpeed = 1000.0f;
-    [SerializeField] List<Vector3> targetPos = new List<Vector3>();
+    //float moveSpeed = 1000.0f;
+    //[SerializeField] List<Vector3> targetPos = new List<Vector3>();
     [SerializeField] Vector2 minmaxStage;
 
     [SerializeField] Button prev;
     [SerializeField] Button next;
     [SerializeField] Button play;
+    [SerializeField] List<Button> StageButton = new List<Button>();
 
     StageSaveData stageUnlock = new StageSaveData();
 
@@ -55,15 +60,20 @@ public class PlayMenu : MonoBehaviour
     public void NextStage()
     {
         if (Stage < minmaxStage.y)
-            StartCoroutine(Next());
+        {
+            //StartCoroutine(Next());
+        }
     }
 
     public void PrevStage()
     {
         if (Stage > minmaxStage.x)
-            StartCoroutine(Prev());
+        {
+            //StartCoroutine(Prev());
+        }
     }
 
+    /*
     IEnumerator Next()
     {
         next.interactable = false;
@@ -149,6 +159,7 @@ public class PlayMenu : MonoBehaviour
 
         t.anchoredPosition3D += dir * delta;
     }
+    */
 
     public void selectStage()
     {
