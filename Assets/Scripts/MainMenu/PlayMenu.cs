@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayMenu : MonoBehaviour
 {
-    [SerializeField] List<Image> StageIMG = new List<Image>();
+    [SerializeField] List<Sprite> StageIMG = new List<Sprite>();
 
     public Image curStageIMG;
     public Image Lock;
@@ -41,6 +41,11 @@ public class PlayMenu : MonoBehaviour
 
             stageUnlock = SaveManager.Inst.LoadFile<StageSaveData>(SaveManager.Inst.StageSavefp);
         }
+        isCanPlay_Button();
+
+        Stage = 0;
+        isCanPlay();
+        ChangeStageIMG(Stage);
     }
 
     // Update is called once per frame
@@ -57,19 +62,46 @@ public class PlayMenu : MonoBehaviour
             play.interactable = false;
     }
 
+    void isCanPlay_Button()
+    {
+        for (int i = (int)minmaxStage.x; i < (int)minmaxStage.y; i++)
+        {
+            if (stageUnlock.isUnlock[i])
+            {
+                StageButton[i].GetComponent<PlayButtonLock>().LockIMG.SetActive(false);
+            }
+            else
+            {
+                StageButton[i].GetComponent<PlayButtonLock>().LockIMG.SetActive(true);
+            }
+        }
+    }
+
     public void NextStage()
     {
-        if (Stage < minmaxStage.y)
+        if (++Stage < (int)minmaxStage.y)
         {
             //StartCoroutine(Next());
+            isCanPlay();
+            ChangeStageIMG(Stage);
+        }
+        else
+        {
+            Stage--;
         }
     }
 
     public void PrevStage()
     {
-        if (Stage > minmaxStage.x)
+        if (--Stage >= (int)minmaxStage.x)
         {
             //StartCoroutine(Prev());
+            isCanPlay();
+            ChangeStageIMG(Stage);
+        }
+        else
+        {
+            Stage++;
         }
     }
 
@@ -164,5 +196,26 @@ public class PlayMenu : MonoBehaviour
     public void selectStage()
     {
         LoadManager.Inst.selectStage = Stage;
+    }
+
+    public void ChangeStage(int num)
+    {
+        if (num >= minmaxStage.y || num < minmaxStage.x)
+        {
+            return;
+        }
+        Stage = num;
+        isCanPlay();
+        ChangeStageIMG(Stage);
+    }
+
+    void ChangeStageIMG(int stage)
+    {
+        curStageIMG.sprite = StageIMG[stage];
+
+        if (stage > minmaxStage.y || stage < minmaxStage.x)
+        {
+            curStageIMG.sprite = Lock.sprite;
+        }
     }
 }

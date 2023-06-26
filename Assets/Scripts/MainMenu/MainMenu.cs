@@ -134,9 +134,4 @@ public class MainMenu : MonoBehaviour
     {
         ChangeMenu(MenuState.Main);
     }
-
-    public void SettingKeyButton()
-    {
-
-    }
 }
