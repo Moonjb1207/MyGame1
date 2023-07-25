@@ -8,7 +8,7 @@ public class PlayMenu : MonoBehaviour
     [SerializeField] List<Sprite> StageIMG = new List<Sprite>();
 
     public Image curStageIMG;
-    public Image Lock;
+    public GameObject Lock;
 
     public int Stage = 0;
     //float moveSpeed = 1000.0f;
@@ -57,9 +57,15 @@ public class PlayMenu : MonoBehaviour
     void isCanPlay()
     {
         if (stageUnlock.isUnlock[Stage])
+        {
             play.interactable = true;
+            Lock.SetActive(false);
+        }
         else
+        {
             play.interactable = false;
+            Lock.SetActive(true);
+        }
     }
 
     void isCanPlay_Button()
@@ -205,6 +211,7 @@ public class PlayMenu : MonoBehaviour
             return;
         }
         Stage = num;
+
         isCanPlay();
         ChangeStageIMG(Stage);
     }
@@ -215,7 +222,7 @@ public class PlayMenu : MonoBehaviour
 
         if (stage > minmaxStage.y || stage < minmaxStage.x)
         {
-            curStageIMG.sprite = Lock.sprite;
+            curStageIMG.sprite = Lock.GetComponentInChildren<Image>().sprite;
         }
     }
 }
