@@ -126,7 +126,7 @@ public class Player : CharacterMovement, IBattle
             case STATE.Create:
                 break;
             case STATE.Normal:
-                if (Physics.Raycast(transform.position, Vector3.down, 0.1f, myGround) && myAnim.GetBool("IsAir"))
+                if (Physics.Raycast(transform.position, Vector3.down, 0.2f, myGround) && myAnim.GetBool("IsAir"))
                 {
                     myAnim.SetBool("IsAir", false);
                     myAnim.SetTrigger("Landing");
