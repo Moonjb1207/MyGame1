@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class HelpVideo : MonoBehaviour
 {
     public GameObject myVideo;
+    public GameObject VideoImg;
 
     bool isPlaying;
     float playTime = 0.0f;
@@ -110,11 +111,19 @@ public class HelpVideo : MonoBehaviour
             return;
         }
 
-        myVideo.SetActive(true);
+        VideoImg.SetActive(true);
 
-        myVideo.transform.SetParent(buttons[n].transform);
-        myVideo.transform.position = Vector3.zero;
+        VideoImg.transform.SetParent(buttons[n].transform);
+        VideoImg.transform.localPosition =
+            new Vector3(-VideoImg.GetComponent<RectTransform>().rect.width / 2 
+                        - buttons[n].GetComponent<RectTransform>().rect.width, 0, 0);
         myPlayer.clip = clips[n];
+
+        if (myPlayer.clip == null)
+        {
+            return;
+        }
+
         myPlayer.Play();
 
         playImg = buttons[n].GetComponent<Image>().sprite;
@@ -127,9 +136,11 @@ public class HelpVideo : MonoBehaviour
 
     void endVideo()
     {
-        myVideo.SetActive(false);
+        VideoImg.SetActive(false);
         buttons[curbutton].GetComponent<Image>().sprite = playImg;
 
         curbutton = -1;
+
+        myPlayer.clip = null;
     }
 }

@@ -8,13 +8,12 @@ public class JumpState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("IsJumping", true);
-        animator.SetBool("IsAir", true);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        animator.SetBool("IsAir", true);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

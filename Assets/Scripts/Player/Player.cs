@@ -128,8 +128,9 @@ public class Player : CharacterMovement, IBattle
             case STATE.Normal:
                 if (Physics.Raycast(transform.position, Vector3.down, 0.2f, myGround) && myAnim.GetBool("IsAir"))
                 {
-                    myAnim.SetBool("IsAir", false);
                     myAnim.SetTrigger("Landing");
+                    myAnim.SetBool("IsAir", false);
+                    Debug.Log("InAir false");
                 }
 
                 if (StageSystem.Inst.myState == StageSystem.StageState.GameOver)
