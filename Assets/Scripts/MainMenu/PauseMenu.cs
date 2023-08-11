@@ -34,6 +34,7 @@ public class PauseMenu : MonoBehaviour
                     i.SetActive(false);
                 }
                 myMenu[(int)MenuState.Main].SetActive(true);
+                CurrentImg.Inst.unActiveImg();
                 break;
             case MenuState.Setting:
                 foreach (GameObject i in myMenu)
@@ -41,6 +42,7 @@ public class PauseMenu : MonoBehaviour
                     i.SetActive(false);
                 }
                 myMenu[(int)MenuState.Setting].SetActive(true);
+                CurrentImg.Inst.ActiveImg((int)MenuState.Setting);
                 break;
             case MenuState.Help:
                 foreach (GameObject i in myMenu)
@@ -48,6 +50,7 @@ public class PauseMenu : MonoBehaviour
                     i.SetActive(false);
                 }
                 myMenu[(int)MenuState.Help].SetActive(true);
+                CurrentImg.Inst.ActiveImg((int)MenuState.Help);
                 break;
         }
     }
