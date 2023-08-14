@@ -100,6 +100,10 @@ public class HelpVideo : MonoBehaviour
                 endVideo();
             }
         }
+        else
+        {
+            return;
+        }
     }
 
     public void playVideo(int n)

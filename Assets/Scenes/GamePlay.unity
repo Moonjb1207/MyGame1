@@ -3728,7 +3728,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: fe99901614263ee48ba90c7909d1dc5d, type: 2}
+  m_Texture: {fileID: 8400000, guid: 3f4f92a3aa5468e4eb1e1341de5246d1, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -13661,7 +13661,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 369212338}
+        m_TargetAssemblyTypeName: SoundSettingManager, Assembly-CSharp
+        m_MethodName: ChangeSound_Slider
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &255788647
 GameObject:
   m_ObjectHideFlags: 0
@@ -19886,7 +19898,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnDeselect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 369212338}
+        m_TargetAssemblyTypeName: SoundSettingManager, Assembly-CSharp
+        m_MethodName: ChangeSound
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTextSelection:
     m_PersistentCalls:
       m_Calls: []
@@ -23494,7 +23518,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 369212338}
+        m_TargetAssemblyTypeName: SoundSettingManager, Assembly-CSharp
+        m_MethodName: ChangeSound_Slider
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &442844753
 GameObject:
   m_ObjectHideFlags: 0
@@ -25897,7 +25933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac6241eeaded8044798c83a7c8719c53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myVideo: {fileID: 0}
+  myVideo: {fileID: 1751453093}
   VideoImg: {fileID: 61750492}
   buttons:
   - {fileID: 1288387216}
@@ -33396,7 +33432,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnDeselect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 369212338}
+        m_TargetAssemblyTypeName: SoundSettingManager, Assembly-CSharp
+        m_MethodName: ChangeSound
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTextSelection:
     m_PersistentCalls:
       m_Calls: []
@@ -38836,7 +38884,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnDeselect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 369212338}
+        m_TargetAssemblyTypeName: SoundSettingManager, Assembly-CSharp
+        m_MethodName: ChangeSound
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTextSelection:
     m_PersistentCalls:
       m_Calls: []
@@ -41526,7 +41586,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 369212338}
+        m_TargetAssemblyTypeName: SoundSettingManager, Assembly-CSharp
+        m_MethodName: ChangeSound_Slider
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &707147378
 GameObject:
   m_ObjectHideFlags: 0
@@ -100175,7 +100247,7 @@ VideoPlayer:
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: fe99901614263ee48ba90c7909d1dc5d, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 3f4f92a3aa5468e4eb1e1341de5246d1, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
