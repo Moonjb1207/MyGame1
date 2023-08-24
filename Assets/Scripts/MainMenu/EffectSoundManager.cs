@@ -18,8 +18,11 @@ public class EffectSoundManager : MonoBehaviour
     private void Awake()
     {
         Inst = this;
-        
-        effectVolume = SettingManager.Inst.EFSound;
+
+        if (SettingManager.Inst != null)
+        {
+            effectVolume = SettingManager.Inst.EFSound;
+        }
     }
 
     // Start is called before the first frame update

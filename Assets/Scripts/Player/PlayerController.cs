@@ -90,9 +90,14 @@ public class PlayerController : MonoBehaviour
         JumpPower = players[curIndex].JumpPower;
         DownPower = players[curIndex].DownPower;
 
-        StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
-
-        myKeys.SettingKeys(SettingManager.Inst.KeyPairs);
+        if (StageUI.Inst != null)
+        {
+            StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
+        }
+        if (SettingManager.Inst != null)
+        {
+            myKeys.SettingKeys(SettingManager.Inst.KeyPairs);
+        }
     }
 
     // Start is called before the first frame update
@@ -143,6 +148,11 @@ public class PlayerController : MonoBehaviour
 
     void ChangeCharcUI()
     {
+        if (StageUI.Inst == null)
+        {
+            return;
+        }
+
         StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
         StageUI.Inst.Player.value = players[curIndex].myStat.CurHP / players[curIndex].myStat.MaxHP;
     }

@@ -42,9 +42,12 @@ public class Player : CharacterMovement, IBattle
     public LayerMask myGround = default;
     public LayerMask myEnemy = default;
     public Transform myHitPos = null;
+    public Transform myFoot = null;
 
     public AudioClip DamagedSound = null;
     public AudioClip HitSound = null;
+
+    RaycastHit hit;
 
     /*
     { { 0, 0, 1 }, { 0, 1, 0 } }
@@ -110,7 +113,10 @@ public class Player : CharacterMovement, IBattle
             case STATE.Create:
                 break;
             case STATE.Normal:
-                StageUI.Inst.Player.value = myStat.CurHP / myStat.MaxHP;
+                if (StageUI.Inst != null)
+                {
+                    StageUI.Inst.Player.value = myStat.CurHP / myStat.MaxHP;
+                }
                 break;
             case STATE.Dead:
                 StopAllCoroutines();
@@ -126,12 +132,22 @@ public class Player : CharacterMovement, IBattle
             case STATE.Create:
                 break;
             case STATE.Normal:
-                if (Physics.Raycast(transform.position, Vector3.down, 0.2f, myGround) && myAnim.GetBool("IsAir"))
+                if (Physics.Raycast(myFoot.position, Vector3.down, 0.5f, myGround) && myAnim.GetBool("IsAir"))
                 {
                     myAnim.SetTrigger("Landing");
                     myAnim.SetBool("IsAir", false);
                     Debug.Log("InAir false");
                 }
+
+                //hits = Physics.RaycastAll(transform.position, Vector3.down, 0.5f, myGround);
+                //if (hits != null && myAnim.GetBool("IsAir"))
+                //{
+                //    myAnim.SetBool("IsAir", false);
+                //    myAnim.SetTrigger("Landing");
+                //    Debug.Log("InAir false");
+
+                //    hits = null;
+                //}
 
                 if (StageSystem.Inst.myState == StageSystem.StageState.GameOver)
                 {

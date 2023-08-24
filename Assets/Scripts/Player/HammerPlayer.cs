@@ -154,6 +154,6 @@ public class HammerPlayer : Player
 
     public void PlayingEfSound_1()
     {
-        EffectSoundManager.Inst.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(myHitPos.position), HitSound);
+        EffectSoundManager.Inst?.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(myHitPos.position), HitSound);
     }
 }
