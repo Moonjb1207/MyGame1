@@ -121,15 +121,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   OnDamagedEf:
-  - {fileID: 4021103657954561961, guid: 10066462b66c0c245923da08bc822a96, type: 3}
-  - {fileID: 4553287630450876385, guid: e5bf9655569081140a96058ef1c80040, type: 3}
+  - {fileID: 4021103657954561961, guid: ff800f0f6ffa5a843aa6bbf3630556cb, type: 3}
+  - {fileID: 4553287630450876385, guid: 3873c8620f161f648bc3906c04fa4374, type: 3}
   SpinePos: {fileID: 1399019692536718274}
   DamagedSound: {fileID: 8300000, guid: 6ae0fd2aaa062c142ac49971c6db5bbb, type: 3}
   HitSound: {fileID: 8300000, guid: 56ec4eed8504c6b4abf4b7f8836bbba3, type: 3}
   PatEf:
-  - {fileID: 8764043878647920493, guid: d03deeb2176152949ad17507ead8918c, type: 3}
-  - {fileID: 4593184484909914552, guid: d43ecefcd82d50b46a63403e37601bec, type: 3}
-  - {fileID: 2708598583397607911, guid: c32a45f49f7315b4eae6670278bf8b0a, type: 3}
+  - {fileID: 8764043878647920493, guid: daa5959877eef9546950823c95ab5a39, type: 3}
+  - {fileID: 4593184484909914552, guid: ebc06f649e550d048b503c77f1a78ecc, type: 3}
+  - {fileID: 2708598583397607911, guid: 52d0e1b9bf1cac74ebfecc5726474409, type: 3}
   Attacksd:
   - {fileID: 0}
   - {fileID: 0}

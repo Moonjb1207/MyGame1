@@ -42,7 +42,7 @@ public class Player : CharacterMovement, IBattle
     public LayerMask myGround = default;
     public LayerMask myEnemy = default;
     public Transform myHitPos = null;
-    public Transform myFoot = null;
+    public GameObject myFoot = null;
 
     public AudioClip DamagedSound = null;
     public AudioClip HitSound = null;
@@ -132,12 +132,14 @@ public class Player : CharacterMovement, IBattle
             case STATE.Create:
                 break;
             case STATE.Normal:
-                if (Physics.Raycast(myFoot.position, Vector3.down, 0.5f, myGround) && myAnim.GetBool("IsAir"))
-                {
-                    myAnim.SetTrigger("Landing");
-                    myAnim.SetBool("IsAir", false);
-                    Debug.Log("InAir false");
-                }
+                //if (Physics.Raycast(myFoot.transform.position, Vector3.down, 0.5f, myGround) && myAnim.GetBool("IsAir"))
+                //{
+                //    myAnim.SetTrigger("Landing");
+                //    myAnim.SetBool("IsAir", false);
+                //    Debug.Log("InAir false");
+                //}
+
+
 
                 //hits = Physics.RaycastAll(transform.position, Vector3.down, 0.5f, myGround);
                 //if (hits != null && myAnim.GetBool("IsAir"))
@@ -343,5 +345,15 @@ public class Player : CharacterMovement, IBattle
         Enemy enemy = col.GetComponent<Enemy>();
         enemy.myStat.DamagedDelay = 0.1f;
         enemy.myStat.IsdmgDelay = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if ((myGround & 1 << collision.gameObject.layer) != 0)
+        {
+            myAnim.SetTrigger("Landing");
+            myAnim.SetBool("IsAir", false);
+            Debug.Log("InAir false");
+        }
     }
 }
