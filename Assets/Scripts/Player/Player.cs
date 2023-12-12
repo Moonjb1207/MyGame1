@@ -11,6 +11,7 @@ public class Player : CharacterMovement, IBattle
     }
 
     protected STATE myState = STATE.Create;
+
     public CharacterStat myStat;
     public List<List<int>> combolAttackList = new List<List<int>>();
     public List<List<int>> combohAttackList = new List<List<int>>();
@@ -28,11 +29,13 @@ public class Player : CharacterMovement, IBattle
     public bool IsComboable = false;
     public float JumpPower = 7.0f;
     public float DownPower = 7.0f;
+
     protected float AttackSize;
     [SerializeField] Transform SpinePos;
     [SerializeField] GameObject[] OnDamagedEf = new GameObject[2];
     [SerializeField] GameObject SpecialEf;
     [SerializeField] GameObject JumpAtEf;
+
 
     public Transform spinePos
     {
@@ -48,6 +51,10 @@ public class Player : CharacterMovement, IBattle
     public AudioClip HitSound = null;
 
     RaycastHit hit;
+
+    #region get_set
+
+    #endregion
 
     /*
     { { 0, 0, 1 }, { 0, 1, 0 } }
