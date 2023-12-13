@@ -9,15 +9,19 @@ public class SwordPlayer : Player
     private void Awake()
     {
         myState = STATE.Create;
-        myStat.CurHP = myStat.MaxHP = 100.0f;
+        CharacterStat temp = GS_myStat;
+        temp.CurHP = temp.MaxHP = 100.0f;
+        GS_myStat = temp;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        myStat.MoveSpeed = 5.0f;
-        myStat.RotSpeed = 700.0f;
-        myStat.AttackDelay = 5.0f;
+        CharacterStat temp = GS_myStat;
+        temp.MoveSpeed = 5.0f;
+        temp.RotSpeed = 700.0f;
+        temp.AttackDelay = 5.0f;
+        GS_myStat = temp;
         AttackSize = 3.0f;
 
         ChangeState(STATE.Normal);
@@ -35,7 +39,7 @@ public class SwordPlayer : Player
         switch (myState)
         {
             case STATE.InBattle:
-                combolAttackList = SwordlCombo;
+                GS_lcombo = SwordlCombo;
                 break;
             case STATE.Waiting:
                 break;
@@ -54,7 +58,7 @@ public class SwordPlayer : Player
     {
         while (myAnim.GetBool("IsAttacking"))
         {
-            Collider[] list = Physics.OverlapSphere(myHitPos.position, AttackSize, myEnemy);
+            Collider[] list = Physics.OverlapSphere(GS_myHitPos.position, AttackSize, GS_myEnemy);
             if (list != null)
             {
                 foreach (Collider col in list)
@@ -76,7 +80,7 @@ public class SwordPlayer : Player
     {
         while (myAnim.GetBool("IsAttacking"))
         {
-            Collider[] list = Physics.OverlapSphere(myHitPos.position, AttackSize, myEnemy);
+            Collider[] list = Physics.OverlapSphere(GS_myHitPos.position, AttackSize, GS_myEnemy);
             if (list != null)
             {
                 foreach (Collider col in list)

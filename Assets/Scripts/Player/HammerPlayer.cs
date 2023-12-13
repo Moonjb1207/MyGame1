@@ -15,10 +15,13 @@ public class HammerPlayer : Player
     // Start is called before the first frame update
     void Start()
     {
-        myStat.CurHP = myStat.MaxHP = 100.0f;
-        myStat.MoveSpeed = 5.0f;
-        myStat.RotSpeed = 700.0f;
-        myStat.AttackDelay = 5.0f;
+        CharacterStat tempStat = GS_myStat;
+        tempStat.CurHP = tempStat.MaxHP = 100.0f;
+        tempStat.MoveSpeed = 5.0f;
+        tempStat.RotSpeed = 700.0f;
+        tempStat.AttackDelay = 5.0f;
+
+        GS_myStat = tempStat;
         AttackSize = 3.0f;
 
         ChangeState(STATE.Normal);
@@ -36,7 +39,7 @@ public class HammerPlayer : Player
         switch(myState)
         {
             case STATE.InBattle:
-                combolAttackList = HammerlCombo;
+                GS_lcombo = HammerlCombo;
                 break;
             case STATE.Waiting:
                 break;
@@ -55,7 +58,7 @@ public class HammerPlayer : Player
     {
         while (myAnim.GetBool("IsAttacking"))
         {
-            Collider[] list = Physics.OverlapSphere(myHitPos.position, AttackSize, myEnemy);
+            Collider[] list = Physics.OverlapSphere(GS_myHitPos.position, AttackSize, GS_myEnemy);
             if (list != null)
             {
                 foreach (Collider col in list)
@@ -77,7 +80,7 @@ public class HammerPlayer : Player
     {
         while (myAnim.GetBool("IsAttacking"))
         {
-            Collider[] list = Physics.OverlapSphere(myHitPos.position, AttackSize, myEnemy);
+            Collider[] list = Physics.OverlapSphere(GS_myHitPos.position, AttackSize, GS_myEnemy);
             if (list != null)
             {
                 foreach (Collider col in list)
@@ -92,7 +95,7 @@ public class HammerPlayer : Player
 
     public void OnjAttack()
     {
-        Collider[] list = Physics.OverlapSphere(myHitPos.position, 3.0f, myEnemy);
+        Collider[] list = Physics.OverlapSphere(GS_myHitPos.position, 3.0f, GS_myEnemy);
         foreach (Collider col in list)
         {
             Damaging(col, 30.0f, 0);
@@ -108,7 +111,7 @@ public class HammerPlayer : Player
     {
         while (myAnim.GetBool("IsAttacking"))
         {
-            Collider[] list = Physics.OverlapSphere(myHitPos.position, AttackSize, myEnemy);
+            Collider[] list = Physics.OverlapSphere(GS_myHitPos.position, AttackSize, GS_myEnemy);
             if (list != null)
             {
                 foreach (Collider col in list)
@@ -130,7 +133,7 @@ public class HammerPlayer : Player
     {
         while (myAnim.GetBool("IsAttacking"))
         {
-            Collider[] list = Physics.OverlapSphere(myHitPos.position, AttackSize, myEnemy);
+            Collider[] list = Physics.OverlapSphere(GS_myHitPos.position, AttackSize, GS_myEnemy);
             if (list != null)
             {
                 foreach (Collider col in list)
@@ -145,7 +148,7 @@ public class HammerPlayer : Player
 
     public void OnSpecialAttack()
     {
-        Collider[] list = Physics.OverlapSphere(transform.position, 3.0f, myEnemy);
+        Collider[] list = Physics.OverlapSphere(transform.position, 3.0f, GS_myEnemy);
         foreach (Collider col in list)
         {
             Damaging(col, 30.0f, 0);
@@ -154,6 +157,6 @@ public class HammerPlayer : Player
 
     public void PlayingEfSound_1()
     {
-        EffectSoundManager.Inst?.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(myHitPos.position), HitSound);
+        EffectSoundManager.Inst?.PlayEfSound(EffectSoundManager.Inst.CreateEffectSound(GS_myHitPos.position), GS_HitSound);
     }
 }

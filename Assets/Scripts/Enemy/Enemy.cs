@@ -4,30 +4,42 @@ using UnityEngine;
 
 public class Enemy : CharacterMovement, IBattle
 {
-    public enum STATE
+    protected enum STATE
     {
         Create, Normal, Battle, Dead, RunAway
     }
 
-    public STATE myState = STATE.Create;
-    public EnemyStat myStat;
-    public AIPerception mySensor;
-    public float curDelay = 0.0f;
-    public Transform myHitPos = null;
-    public float attackRange = 2.0f;
-    public LayerMask myGround = default;
+    protected STATE myState = STATE.Create;
+    [SerializeField] protected EnemyStat myStat;
+    [SerializeField] protected AIPerception mySensor;
+    [SerializeField] protected float curDelay = 0.0f;
+    [SerializeField] protected Transform myHitPos = null;
+    [SerializeField] protected float attackRange = 2.0f;
+    [SerializeField] protected LayerMask myGround = default;
 
     [SerializeField] GameObject[] OnDamagedEf = new GameObject[2];
     [SerializeField] Transform SpinePos;
 
-    public AudioClip DamagedSound = null;
-    public AudioClip HitSound = null;
+    [SerializeField] AudioClip DamagedSound = null;
+    [SerializeField] AudioClip HitSound = null;
+
+    #region get_set
+
+    public EnemyStat GS_myStat
+    {
+        get => myStat;
+        set
+        {
+            myStat = value;
+        }
+    }
 
     public Transform spinePos
     {
         get => SpinePos;
     }
 
+    #endregion
     protected float spearSize = 0.5f;
     
 

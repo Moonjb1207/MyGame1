@@ -80,7 +80,7 @@ public class SkillIcon : UIProperty, IPointerClickHandler, IBeginDragHandler, ID
 
     public void UsePotion()
     {
-        PlayerController.Inst.players[PlayerController.Inst.CurIndex].getPotion(myPotions.potions[type].value);
+        PlayerController.Inst.GS_players[PlayerController.Inst.CurIndex].getPotion(myPotions.potions[type].value);
     }
 
     public void countZero()

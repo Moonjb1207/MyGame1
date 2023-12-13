@@ -12,10 +12,10 @@ public class Player : CharacterMovement, IBattle
 
     protected STATE myState = STATE.Create;
 
-    public CharacterStat myStat;
-    public List<List<int>> combolAttackList = new List<List<int>>();
-    public List<List<int>> combohAttackList = new List<List<int>>();
-    public Sprite myIMG = null;
+    [SerializeField] CharacterStat myStat;
+    [SerializeField] List<List<int>> combolAttackList = new List<List<int>>();
+    [SerializeField] List<List<int>> combohAttackList = new List<List<int>>();
+    [SerializeField] Sprite myIMG = null;
 
     /*
     public int[] playCombo = new int[2];
@@ -25,10 +25,10 @@ public class Player : CharacterMovement, IBattle
     public bool IsRightCombo = false;
     */
 
-    public GameObject myListener;
-    public bool IsComboable = false;
-    public float JumpPower = 7.0f;
-    public float DownPower = 7.0f;
+    [SerializeField] GameObject myListener;
+    [SerializeField] bool IsComboable = false;
+    [SerializeField] float JumpPower = 7.0f;
+    [SerializeField] float DownPower = 7.0f;
 
     protected float AttackSize;
     [SerializeField] Transform SpinePos;
@@ -42,17 +42,99 @@ public class Player : CharacterMovement, IBattle
         get => SpinePos;
     }
 
-    public LayerMask myGround = default;
-    public LayerMask myEnemy = default;
-    public Transform myHitPos = null;
-    public GameObject myFoot = null;
+    [SerializeField] LayerMask myGround = default;
+    [SerializeField] LayerMask myEnemy = default;
+    [SerializeField] Transform myHitPos = null;
+    [SerializeField] GameObject myFoot = null;
 
-    public AudioClip DamagedSound = null;
-    public AudioClip HitSound = null;
+    [SerializeField] AudioClip DamagedSound = null;
+    [SerializeField] AudioClip HitSound = null;
 
     RaycastHit hit;
 
     #region get_set
+
+    public CharacterStat GS_myStat
+    {
+        get { return myStat; }
+        set
+        {
+            myStat = value;
+        }
+    }
+
+    public List<List<int>> GS_lcombo
+    {
+        get => combolAttackList;
+        set
+        {
+            combolAttackList = value;
+        }
+    }
+
+    public List<List<int>> GS_hcombo
+    {
+        get => combohAttackList;
+        set
+        {
+            combohAttackList = value;
+        }
+    }
+
+    public Sprite GS_myIMG
+    {
+        get => myIMG;
+    }
+
+    public GameObject GS_myListener
+    {
+        get => myListener;
+    }
+
+    public bool GS_IsComboable
+    {
+        get => IsComboable;
+    }
+
+    public LayerMask GS_myGround
+    {
+        get => myGround;
+    }
+
+    public LayerMask GS_myEnemy
+    {
+        get => myEnemy;
+    }
+
+    public Transform GS_myHitPos
+    {
+        get => myHitPos;
+    }
+
+    public GameObject GS_myFoot
+    {
+        get => myFoot;
+    }
+    
+    public AudioClip GS_DamagedSound
+    {
+        get => DamagedSound;
+    }
+
+    public AudioClip GS_HitSound
+    {
+        get => HitSound;
+    }
+
+    public float GS_JumpPower
+    {
+        get => JumpPower;
+    }
+
+    public float GS_DownPower
+    {
+        get => DownPower;
+    }
 
     #endregion
 
@@ -332,7 +414,7 @@ public class Player : CharacterMovement, IBattle
         yield return new WaitForSeconds(1.0f);
 
         StageSystem.Inst.PlayerDead();
-        PlayerController.Inst.myCam.IsLive = false;
+        PlayerController.Inst.GS_myCam.IsLive = false;
     }
 
     public void InCharc()
@@ -350,8 +432,8 @@ public class Player : CharacterMovement, IBattle
         IBattle ib = col.GetComponent<IBattle>();
         ib?.OnDamage(dmg, i);
         Enemy enemy = col.GetComponent<Enemy>();
-        enemy.myStat.DamagedDelay = 0.1f;
-        enemy.myStat.IsdmgDelay = true;
+        enemy.GS_myStat.DamagedDelay = 0.1f;
+        enemy.GS_myStat.IsdmgDelay = true;
     }
 
     private void OnCollisionEnter(Collision collision)

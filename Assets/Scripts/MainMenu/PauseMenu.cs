@@ -90,16 +90,16 @@ public class PauseMenu : MonoBehaviour
 
     public void MainBackButton()
     {
-        if (PlayerController.Inst.Pause == null)
+        if (PlayerController.Inst.GS_Pause == null)
         {
             return;
         }
 
         Time.timeScale = 1.0f;
-        PlayerController.Inst.Pause.SetActive(false);
+        PlayerController.Inst.GS_Pause.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
-        PlayerController.Inst.myCam.IsLive = true;
+        PlayerController.Inst.GS_myCam.IsLive = true;
     }
 
     public void SettingBackButton()

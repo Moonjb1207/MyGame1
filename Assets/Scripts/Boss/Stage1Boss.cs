@@ -14,8 +14,10 @@ public class Stage1Boss : Boss
     bool firstRndAtk = true;
     GameObject[] spears = new GameObject[10];
 
-    public GameObject[] PatEf = new GameObject[3];
-    public AudioClip[] Attacksd = new AudioClip[3];
+    [SerializeField] GameObject[] PatEf = new GameObject[3];
+    [SerializeField] AudioClip[] Attacksd = new AudioClip[3];
+
+
 
     GameObject efSound;
 

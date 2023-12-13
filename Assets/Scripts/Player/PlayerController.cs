@@ -30,16 +30,13 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] KeyOption myKeys = new KeyOption();
 
-    public Player[] players = new Player[2];
+    [SerializeField] Player[] players = new Player[2];
     [SerializeField] int curIndex;
-    public int CurIndex
-    {
-        get => curIndex;
-    }
+    
 
-    public SpringArm myCam;
-    public GameObject myEar;
-    public GameObject Pause;
+    [SerializeField] SpringArm myCam;
+    [SerializeField] GameObject myEar;
+    [SerializeField] GameObject Pause;
 
     [SerializeField]Animator myAnim;
     Rigidbody myRigid;
@@ -65,6 +62,32 @@ public class PlayerController : MonoBehaviour
 
     Vector3 curPos = Vector3.zero;
 
+    #region get_set
+
+    public int CurIndex
+    {
+        get => curIndex;
+    }
+
+    public Player[] GS_players
+    {
+        get => players;
+    }
+
+    public SpringArm GS_myCam
+    {
+        get => myCam;
+    }
+
+    public GameObject GS_Pause
+    {
+        get => Pause;
+    }
+
+    #endregion
+
+
+
     private void Awake()
     {
         Inst = this;
@@ -77,22 +100,16 @@ public class PlayerController : MonoBehaviour
         players[curIndex].gameObject.SetActive(true);
 
         myCam.transform.SetParent(players[curIndex].transform);
-        myEar.transform.SetParent(players[curIndex].myListener.transform);
+        myEar.transform.SetParent(players[curIndex].GS_myListener.transform);
 
         players[curIndex].InCharc();
 
         curIndex = 0;
-        myAnim = players[curIndex].myAnim;
-        myRigid = players[curIndex].myRigid;
-        myGround = players[curIndex].myGround;
-        combolAttackList = players[curIndex].combolAttackList;
-        combohAttackList = players[curIndex].combohAttackList;
-        JumpPower = players[curIndex].JumpPower;
-        DownPower = players[curIndex].DownPower;
+        SetCharacter();
 
         if (StageUI.Inst != null)
         {
-            StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
+            StageUI.Inst.PlayerIMG.sprite = players[curIndex].GS_myIMG;
         }
         if (SettingManager.Inst != null)
         {
@@ -127,23 +144,28 @@ public class PlayerController : MonoBehaviour
         if (curIndex > 1)
             curIndex = 0;
 
-        myAnim = players[curIndex].myAnim;
-        myRigid = players[curIndex].myRigid;
-        myGround = players[curIndex].myGround;
-        combolAttackList = players[curIndex].combolAttackList;
-        combohAttackList = players[curIndex].combohAttackList;
-        JumpPower = players[curIndex].JumpPower;
-        DownPower = players[curIndex].DownPower;
+        SetCharacter();
 
         players[curIndex].transform.position = curPos;
 
         players[curIndex].gameObject.SetActive(true);
 
         myCam.transform.SetParent(players[curIndex].transform);
-        myEar.transform.SetParent(players[curIndex].myListener.transform);
+        myEar.transform.SetParent(players[curIndex].GS_myListener.transform);
 
         players[curIndex].InCharc();
         ChangeCharcUI();
+    }
+
+    void SetCharacter()
+    {
+        myAnim = players[curIndex].myAnim;
+        myRigid = players[curIndex].myRigid;
+        myGround = players[curIndex].GS_myGround;
+        combolAttackList = players[curIndex].GS_lcombo;
+        combohAttackList = players[curIndex].GS_hcombo;
+        JumpPower = players[curIndex].GS_JumpPower;
+        DownPower = players[curIndex].GS_DownPower;
     }
 
     void ChangeCharcUI()
@@ -153,8 +175,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        StageUI.Inst.PlayerIMG.sprite = players[curIndex].myIMG;
-        StageUI.Inst.Player.value = players[curIndex].myStat.CurHP / players[curIndex].myStat.MaxHP;
+        StageUI.Inst.PlayerIMG.sprite = players[curIndex].GS_myIMG;
+        StageUI.Inst.Player.value = players[curIndex].GS_myStat.CurHP / players[curIndex].GS_myStat.MaxHP;
     }
 
     
@@ -214,7 +236,7 @@ public class PlayerController : MonoBehaviour
                         pressedButton = 1;
                     }
 
-                    if (players[curIndex].IsComboable)
+                    if (players[curIndex].GS_IsComboable)
                     {
                         IsRightCombo = false;
 
@@ -294,7 +316,7 @@ public class PlayerController : MonoBehaviour
         //}
 
         //JumpAttack
-        if (myAnim.GetBool("IsJumping") && players[curIndex].IsComboable)
+        if (myAnim.GetBool("IsJumping") && players[curIndex].GS_IsComboable)
         {
             if (Input.GetMouseButtonDown(0))
             {
