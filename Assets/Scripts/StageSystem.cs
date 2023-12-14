@@ -169,8 +169,11 @@ public class StageSystem : MonoBehaviour
     {
         ChangeState(StageState.Start);
 
-        BGSoundManager.Inst.myBG.clip = BGSoundManager.Inst.PlayBG;
-        BGSoundManager.Inst.myBG.Play();
+        if (BGSoundManager.Inst != null)
+        {
+            BGSoundManager.Inst.GS_myBG.clip = BGSoundManager.Inst.GS_PlayBG;
+            BGSoundManager.Inst.GS_myBG.Play();
+        }
     }
 
     // Update is called once per frame

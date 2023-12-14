@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class SoundSettingManager : MonoBehaviour
 {
-    public Slider[] Sound;
-    public TMPro.TMP_InputField[] Soundnum;
+    Slider[] Sound;
+    TMPro.TMP_InputField[] Soundnum;
     public static SoundSettingManager Inst = null;
 
     private void Awake()
@@ -34,7 +34,7 @@ public class SoundSettingManager : MonoBehaviour
         SettingManager.Inst.BGSound = Sound[1].value;
         SettingManager.Inst.EFSound = Sound[2].value;
 
-        BGSoundManager.Inst.myBG.volume = SettingManager.Inst.BGSound;
+        BGSoundManager.Inst.GS_myBG.volume = SettingManager.Inst.BGSound;
 
         SettingManager.Inst.SettingSave(Application.dataPath + @"gameSettingData.data");
     }

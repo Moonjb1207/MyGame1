@@ -6,10 +6,30 @@ using UnityEngine.UI;
 public class BGSoundManager : MonoBehaviour
 {
     public static BGSoundManager Inst = null;
-    public AudioSource myBG = null;
 
-    public AudioClip MainBG;
-    public AudioClip PlayBG;
+    [SerializeField] AudioSource myBG = null;
+
+    [SerializeField] AudioClip MainBG;
+    [SerializeField] AudioClip PlayBG;
+
+    #region get_set
+
+    public AudioClip GS_MainBG
+    {
+        get => MainBG;
+    }
+
+    public AudioClip GS_PlayBG
+    {
+        get => PlayBG;
+    }
+
+    public AudioSource GS_myBG
+    {
+        get => myBG;
+    }
+
+    #endregion
 
     private void Awake()
     {

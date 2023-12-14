@@ -8,7 +8,7 @@ public class EffectSoundManager : MonoBehaviour
 
     float effectVolume;
 
-    public Queue<GameObject> efSoundQueue = new Queue<GameObject>();
+    Queue<GameObject> efSoundQueue = new Queue<GameObject>();
 
     public float EffectVolume
     {

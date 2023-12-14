@@ -7,10 +7,10 @@ public class PlayMenu : MonoBehaviour
 {
     [SerializeField] List<Sprite> StageIMG = new List<Sprite>();
 
-    public Image curStageIMG;
-    public GameObject Lock;
+    [SerializeField] Image curStageIMG;
+    [SerializeField] GameObject Lock;
 
-    public int Stage = 0;
+    [SerializeField] int Stage = 0;
     //float moveSpeed = 1000.0f;
     //[SerializeField] List<Vector3> targetPos = new List<Vector3>();
     [SerializeField] Vector2 minmaxStage;
@@ -21,6 +21,24 @@ public class PlayMenu : MonoBehaviour
     [SerializeField] List<Button> StageButton = new List<Button>();
 
     StageSaveData stageUnlock = new StageSaveData();
+
+    #region get_set
+    public int GS_Stage
+    {
+        get => Stage;
+        set
+        {
+            GS_Stage = value;
+        }
+    }
+
+    public Image GS_curStageIMG
+    {
+        get => curStageIMG;
+    }
+
+    #endregion
+
 
     // Start is called before the first frame update
     void Start()
